@@ -1,0 +1,202 @@
+#solarSystem{
+    background-color:black;
+    position:relative;
+    width: 1300px;
+    height:1300px;
+}
+
+@mixin planet-size($radius){
+    height:$radius;
+    width:$radius;
+    margin: ($radius/2 * -1) 0px 0px ($radius/2 * -1);
+}
+
+@mixin planet-orbit($radius){
+    width:$radius;
+    height:$radius;
+    margin-top: ($radius / 2) * -1;
+    margin-left: ($radius / 2) * -1;
+ }
+@mixin moon-orbit($radius){
+    width:$radius;
+    height:$radius;
+    margin-top: (($radius / 2) + 2) * -1;
+    margin-left: (($radius / 2) + 2) * -1;
+}
+@mixin orbit-rate($speed){
+    -webkit-animation: spin-right $speed linear infinite;
+    -moz-animation: spin-right $speed linear infinite;
+    -ms-animation: spin-right $speed linear infinite;
+    animation: spin-right $speed linear infinite;
+}
+
+
+#sun{
+    position: absolute;
+    /* Positions the top-left corner of the image to be *
+    /* in the middle of the box */
+    top: 50%;
+    left: 50%;
+    
+    /* Play with these numbers to see what it does */
+    height: 200px;
+    width: 200px;
+    margin-top: -100px; 
+    margin-left: -100px;
+    background-color:yellow;
+    border-color:orange;
+    border-width:4px;
+    border-style: solid;
+    border-radius:50%;
+    
+    box-shadow: 0px 0 500px 10px red;
+}
+
+.orbit
+{
+    position: absolute;
+    top:50%;
+    left:50%;
+    border: 2px dotted white;
+    border-radius:50%;
+    
+    .moon, .planet{
+      position: absolute;
+      border-radius:50%;
+      left:50%;
+      top:0px;
+    }
+}
+
+#moon{
+    @include moon-orbit(50px );
+    @include orbit-rate(2s);
+    .moon{
+        background-color:grey;
+        border:1px solid gray;
+        @include planet-size(10px);
+
+    }
+    
+}
+
+#mercury{
+    @include planet-orbit(300px );
+    @include orbit-rate(2s);
+    
+    .planet{
+        background-color:grey;
+        border:1px solid gray;
+        @include planet-size(10px);
+
+    }
+}
+
+#venus{
+    @include planet-orbit(400px);
+    @include orbit-rate(4s);
+    
+    .planet{
+        background-color:orange;
+        border:1px solid red;
+        @include planet-size(25px);
+    }
+}
+
+#earth{
+    @include planet-orbit(500px);
+    @include orbit-rate(6s);
+
+    .planet{ 
+        background-color:blue;
+        border:1px solid green;
+        @include planet-size(30px);
+    }
+
+}
+
+#mars{
+    @include planet-orbit(600px);
+    @include orbit-rate(8s);
+
+    .planet{
+        background-color:red;
+        border:1px solid orange;
+        @include planet-size(15px);
+    }
+
+}
+
+#jupiter{
+    @include planet-orbit(800px);
+    @include orbit-rate(12s);
+
+    .planet{
+        background-color:orange;
+        @include planet-size(50px);
+    }
+
+}
+#saturn{
+    $size: 30px;
+    @include planet-orbit(900px);
+    @include orbit-rate(14s);
+   
+   .planet{
+        border:1px solid white;
+        background-color:tan;
+ 
+        @include planet-size($size);
+    }
+    
+    .ring{
+        border:5px solid #B0C4DE;
+        border-radius:50%;
+        margin: -10px 0px 0px -10px;
+        height: $size + 10px;
+        width: $size + 10px;
+    }
+
+}
+
+#uranus{
+    @include planet-orbit(1000px);
+    @include orbit-rate(16s);
+
+    .planet{
+        background-color:darkblue;
+        border:1px solid white;
+        @include planet-size(30px);
+    }
+
+}
+#neptune{
+    @include planet-orbit(1200px);
+    @include orbit-rate(18s);
+
+    .planet{
+        background-color:cyan;
+        border:1px solid white;
+        @include planet-size(30px);
+    }
+
+}
+
+@-webkit-keyframes spin-right{
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+        
+    }
+}
+
+@keyframes spin-right{
+    100%{
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform:rotate(360deg);
+    }
+}

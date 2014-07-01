@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name portfolioApp.controller:MainCtrl
+ * @name portfolioApp.controller:AboutCtrl
  * @description
- * # MainCtrl
+ * # AboutCtrl
  * Controller of the portfolioApp
  */
 angular.module('portfolioApp')
-  .controller('MainCtrl', function ($scope) {
-   
+  .controller('AboutCtrl', function ($scope) {
+    
   });
