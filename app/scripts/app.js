@@ -31,6 +31,10 @@ angular
         templateUrl: 'views/cssSolarSystem.html',
         controller: 'CssSolarSystemCtrl'
       })
+      .when('/three-js-demo', {
+        templateUrl: 'views/threejsdemo.html',
+        controller: 'threeJsDemoCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
