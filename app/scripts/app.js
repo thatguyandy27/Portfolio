@@ -31,6 +31,10 @@ angular
         templateUrl: 'views/cssSolarSystem.html',
         controller: 'CssSolarSystemCtrl'
       })
+      .when('/canvas-chess', {
+        templateUrl: 'views/canvasChess.html',
+        controller: 'CanvasChessCtrl'
+      })
       .when('/three-js-demo', {
         templateUrl: 'views/threejsdemo.html',
         controller: 'threeJsDemoCtrl'
