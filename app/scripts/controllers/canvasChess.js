@@ -8,32 +8,74 @@
  * Controller of the portfolioApp
  */
 angular.module('portfolioApp')
-  .controller('CanvasChessCtrl', ['$scope', 'boardService', 'pieceService', function ($scope, boardService, pieceService) {
+  .controller('CanvasChessCtrl', ['$scope', 'boardService', 'playerService', 'gameService', function ($scope, boardService, playerService, gameService) {
 
     var board = boardService.createBoard();
 
-    var pieces = [[null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null],
-                [null, null, null, null,null, null, null, null]];
-    $scope.isGameActive = false;
-
+    var game = null;
+    var context = angular.element('#canvas')[0].getContext('2d');
 
     $scope.newGame = function newGame(){
-        pieces[0][0] = new window.Rook(player2);
-        pieces[0][7] = new window.Rook(player2);
 
-        pieces[7][0] = new window.Rook(player1);
-        pieces[7][7] = new window.Rook(player1);
-
-
-        $scope.isGameActive = true;
+        game = gameService.newGame(playerService.newPlayer("local", {name: "Player1"}), 
+            playerService.newPlayer("local", {name: "Player2"}));
     };
 
-    $scope.lightColor = '#FFFFFF';
-    
+    function drawBoard(){
+        board.drawBoard(context, [$scope.lightTileColor,$scope.darkTileColor]);
+        
+        if(game != null){
+            for (var y = 0; y < game.board.length; y++) {
+                var row = game.board[y];
+       
+                for(var x= 0; x< row.length; x++){
+                    if (row[x] !== null){
+                        var options = {
+                            fillStyle: player1FillColor,
+                            strokeStyle: player1OutlineColor
+                        };
+
+                        if (row[x].player !== game.player1){
+                            options.fillStyle = player2FillColor;
+                            options.strokeStyle = player2OutlineColor;
+                        }
+
+                        board.drawPiece(context, x, y, function(context, tileWidth, tileHeight, options){ 
+                            row[x].draw.call(row[x], context, tileWidth, tileHeight, options); 
+                        }, options);
+                    }
+                }
+            };
+        }
+    }
+
+    $scope.lightTileColor = '#FFFFFF';
+    $scope.darkTileColor = "#000000";
+    $scope.player1FillColor = '#FFFFFF';
+    $scope.player1OutlineColor = "#000000";
+    $scope.player2OutlineColor = '#FFFFFF';
+    $scope.player2FillColor = "#000000";
+
+    $scope.$watch('lightTileColor',function(){
+        drawBoard();
+    });
+    $scope.$watch('darkTileColor',function(){
+        drawBoard();
+    });
+
+    $scope.$watch('player1FillColor',function(){
+        drawBoard();
+    });
+    $scope.$watch('player1OutlineColor',function(){
+        drawBoard();
+    });
+
+    $scope.$watch('player2FillColor',function(){
+        drawBoard();
+    });
+    $scope.$watch('player2OutlineColor',function(){
+        drawBoard();
+    });
+
+    drawBoard();
   }]);

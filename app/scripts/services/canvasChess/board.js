@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('RFRecorder').
+angular.module('portfolioApp').
     factory('boardService', [function(){
 
     var X_START = 10,

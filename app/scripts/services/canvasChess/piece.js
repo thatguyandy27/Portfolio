@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('RFRecorder').
+angular.module('portfolioApp').
     factory('pieceService', [function(){
 
     function Piece(){
