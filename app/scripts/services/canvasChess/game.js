@@ -3,6 +3,35 @@
 angular.module('portfolioApp').
     factory('gameService', ['pieceService', function(pieceService){
 
+    var _kingType = "king";
+
+    function findPlaceOnBoard(piece, board){
+        for( var y = 0; y < board.length; y++){
+            var row = board[y];
+            for (var x=0; x < row.length; x++){
+                if (piece === row[x]){
+                    return {x:x, y:y};
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+    function findPiece(pieceType, player, board){
+        for( var y = 0; y < board.length; y++){
+            var row = board[y];
+            for (var x=0; x < row.length; x++){
+                if (piece.getType() === pieceType  && player === piece.player){
+                    return {x:x, y:y};
+                }
+            }
+        }
+
+        return null;
+    }
+
     function Game(player1, player2){
         this.player1 = player1;
         this.player2 = player2;
@@ -19,8 +48,158 @@ angular.module('portfolioApp').
             new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1)],
             [new window.Rook(player1), new window.Knight(player1), new window.Bishop(player1), new window.Queen(player1) ,
             new window.King(player1), new window.Bishop(player1), new window.Knight(player1), new window.Rook(player1)]];
+
+        this.activePlayer = player1;
    
     }
+
+    function isPlayerInCheck(player, board){
+        var king = findPiece(_kingType, player, board);
+
+        //enumerate 
+
+
+    }
+
+    function getValidMovesOnBoard(x, y, game){
+        var piece = game.board[y][x];
+        var validMoves = null;
+
+        if (piece === null){
+            return null;
+        }
+        switch(piece.getType()){
+            case "pawn":
+                validMoves = getPawnMoves(x,y, game);
+                break;
+            case "knight":
+                validMoves = getKnightMoves(x,y,game);
+                break;
+        }
+
+
+    }
+
+    function getPawnMoves(x,y,game){
+        var piece = game.board[y][x];
+        var moves = [];
+
+        var direction = 1,
+            startingRank =1;
+
+        //direction matters.  Assume player 1 goes up, and player 2 goes down.
+        if (piece.player !== player1){
+            startingRank = 6;
+            direction = -1;
+            
+        }
+
+        //move one spot
+        if (game.board[y+ direction][x] === null){
+            moves.push({y:y+direction, x:x});
+
+            //move two spaces if starting rank
+            if(y === startingRank && game.board[y+ (2* direction)][x] === null){
+                moves.push({y:y + (2* direction), x:x});
+            }
+
+            //TODO ENPASSANT
+
+        }
+        // attacking left!
+        if(x > 0 && game.board[y+ direction][x - 1] === null){
+            moves.push({y:y+direction, x:x - 1});
+        }
+        // attacking right!
+        if(x < 7 && game.board[y+ direction][x + 1] === null){
+            moves.push({y:y+direction, x:x + 1});
+        }
+
+        return moves;
+    }
+
+
+    function getKnightMoves(x,y, game){
+        var piece = game.board[y][x],
+            spot = null,
+            moves = [];
+        
+        // left 2 up 1
+        if (x >= 2 && y <= 6){
+            spot = game.board[y +  1][x - 2];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y +  1, x: x - 2});
+            }
+        }
+
+        // left 1 up 2
+        if (x >= 1 && y <= 5){
+            spot = game.board[y +  2][x - 1];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y +  2, x: x - 1});
+            }
+        }
+
+        // right 1 up 2
+        if (x <= 6 && y <= 5){
+            spot = game.board[y +  2][x + 1];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y + 2, x: x + 1});
+            }
+        }
+
+        // right 2 up 1
+        if (x <= 5 && y <= 6){
+            spot = game.board[y +  1][x + 2];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y + 1, x: x + 2});
+            }
+        }
+
+        // right 2 down 1
+        if (x <= 5 && y >= 1){
+            spot = game.board[y -  1][x + 2];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y - 1, x: x + 2});
+            }
+        }
+
+        // right 1 down 2
+        if (x <= 6 && y >= 2){
+            spot = game.board[y - 2][x + 1];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y - 2, x: x + 1});
+            }
+        }
+
+        // left 1 down 2
+        if (x >= 1 && y >= 2){
+            spot = game.board[y - 2][x - 1];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y - 2, x: x - 1});
+            }
+        }
+        // left 2 down 1
+        if (x >= 2 && y >= 1){
+            spot = game.board[y - 1][x - 2];
+            if (spot === null || spot.player != piece.player){
+                moves.push({y: y - 1, x: x - 2});
+            }
+        }
+
+        return moves;
+    }
+
+    Game.prototype = {
+        canMovePiece: function canMovePiece(piece){
+            return (this.activePlayer == piece.player);
+        },
+        getValidMovesForPiece: function getValidMovesForPiece(x, y){
+            return getValidMovesOnBoard(x,y this);
+
+        }
+    };
+
 
     function newGame(player1, player2){
         return new Game();

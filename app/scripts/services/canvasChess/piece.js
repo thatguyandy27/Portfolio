@@ -57,6 +57,7 @@ angular.module('portfolioApp').
 
     function Pawn(player){
         this.player = player;
+        this.getType = function getType(){ return "pawn";}
     }
 
     function drawPawnHead(context, height, width, options){
@@ -78,6 +79,7 @@ angular.module('portfolioApp').
 
     function Rook(player){
         this.player = player;
+        this.getType = function getType(){ return "rook";}
     }
 
     function drawRookHead(context, width, height, options){
@@ -186,6 +188,7 @@ angular.module('portfolioApp').
 
     function Knight(player){
         this.player = player;
+        this.getType = function getType(){ return "knight";}
     }
 
     Knight.prototype = new Piece();
@@ -226,6 +229,7 @@ angular.module('portfolioApp').
 
     function Bishop(player){
         this.player = player;
+        this.getType = function getType(){ return "bishop";}
     }
 
     Bishop.prototype = new Piece();
@@ -233,6 +237,7 @@ angular.module('portfolioApp').
 
     function Queen(player){
         this.player = player;
+        this.getType = function getType(){ return "queen";}
     }
 
     function drawQueenHead(context, width, height, options){
@@ -344,6 +349,7 @@ angular.module('portfolioApp').
 
     function King(player){
         this.player = player;
+        this.getType = function getType(){ return "king";}
     }
 
     King.prototype = new Piece();
