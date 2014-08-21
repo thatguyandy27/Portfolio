@@ -75,8 +75,21 @@ angular.module('portfolioApp').
             case "knight":
                 validMoves = getKnightMoves(x,y,game);
                 break;
+            case "rook":
+                validMoves = getRookMoves(x,y,game);
+                break;
+            case "bishop":
+                validMoves = getBishopMoves(x,y,game);
+                break;
+            case "queen":
+                validMoves = getQueenMoves(x,y,game);
+                break;
+            case "king":
+                validMoves = getKingMoves(x,y,game);
+                break;
         }
 
+        return validMoves;
 
     }
 
@@ -118,6 +131,241 @@ angular.module('portfolioApp').
         return moves;
     }
 
+    function getRookMoves(x,y,game){
+        var piece = game.board[y][x],
+            moves= [],
+            xIndex = x,
+            yIndex = y,
+            currentPosition = null;
+
+        // check left
+        for(xIndex =  x - 1; xIndex >= 0; xIndex--){
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+        }
+        // check right
+                // check left
+        for(xIndex =  x + 1 ; xIndex <= 7; xIndex++){
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+        }
+        xIndex = x;
+        // check up 
+        for(yIndex =  y + 1; yIndex >= 0; yIndex++){
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+        }
+
+        // check down
+        for(yIndex =  y - 1; yIndex >= 0; yIndex--){
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+        }
+    }
+    
+    
+    function getBishopMoves(x,y,game){
+        var piece = game.board[y][x],
+            moves= [],
+            xIndex = x,
+            yIndex = y,
+            currentPosition = null;
+
+        // check upperleft
+        xIndex = x - 1;
+        yIndex = y - 1;
+        while(xIndex >= 0 && yIndex >= 0)
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+            xIndex--;
+            yIndex--;
+
+        }
+ 
+        // check upper right
+        xIndex = x + 1;
+        yIndex = y - 1;
+        while(xIndex <= 7 && yIndex >= 0)
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+            xIndex++;
+            yIndex--;
+
+        }
+        
+        // check lower left
+        xIndex = x - 1;
+        yIndex = y + 1;
+        while(xIndex >= 0 && yIndex <= 7)
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+            xIndex--;
+            yIndex++;
+
+        }
+
+        // check lower right
+        xIndex = x + 1;
+        yIndex = y + 1;
+        while(xIndex <= 7 && yIndex <= 7)
+            currentPosition = game.board[yIndex][xIndex];
+            if (currentPosition === null){
+                moves.push({y:yIndex, x:xIndex});
+            }
+            else{
+                // if other piece then you can capture.
+                if (currentPosition.player !== piece.player){
+                    moves.push({y:yIndex, x:xIndex});
+                }
+                break;
+            }
+            xIndex++;
+            yIndex++;
+
+        }
+    }
+
+    function getKingMoves(x,y,game){
+        var piece = game.board[y][x],
+            moves= [],
+            xIndex = x,
+            yIndex = y,
+            currentPosition = null;
+
+        //upperleft
+        if (x > 0 && y > 0){
+            currentPosition = game.board[y -1][x - 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y -  1, x: x -1});
+            }
+        }
+
+        //up
+        if (y > 0){
+            currentPosition = game.board[y -1][x];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y -  1, x: x });
+            }
+        }
+
+        //upper right
+        if (x < 7 && y > 0){
+            currentPosition = game.board[y -1][x + 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y -  1, x: x +1});
+            }
+        }
+
+        // right
+        if (x < 7 ){
+            currentPosition = game.board[y ][x + 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y, x: x +1});
+            }
+        }
+
+        //bottom right
+        if (x < 7 && y < 7){
+            currentPosition = game.board[y +1][x + 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y +  1, x: x +1});
+            }
+        }
+
+        //bottom
+        if (y < 7){
+            currentPosition = game.board[y +1][x];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y +  1, x: x });
+            }
+        }
+
+        //bottom left
+        if (x > 0 && y < 7){
+            currentPosition = game.board[y +1][x - 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y +  1, x: x -1});
+            }
+        }
+
+        //left
+        if (x > 0){
+            currentPosition = game.board[y ][x - 1];
+            if (currentPosition === null || currentPosition.player !== piece.player ){
+                moves.push({y: y , x: x -1});
+            }
+        }
+
+    }
+
+    function getQueenMoves(x,y, game){
+        var rookMoves = getRookMoves(x,y,game);
+        var bishopMoves = getBishopMoves(x,y,game);
+        return bishopMoves.concat(rookMoves);
+    }
 
     function getKnightMoves(x,y, game){
         var piece = game.board[y][x],
@@ -139,7 +387,7 @@ angular.module('portfolioApp').
                 moves.push({y: y +  2, x: x - 1});
             }
         }
-
+        
         // right 1 up 2
         if (x <= 6 && y <= 5){
             spot = game.board[y +  2][x + 1];

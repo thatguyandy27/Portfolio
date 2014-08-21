@@ -17,7 +17,7 @@ angular.module('portfolioApp')
     document.getElementById('demoContainer').appendChild( renderer.domElement );
 
     var geometry = new THREE.CubeGeometry(1,1,1);
-    var material = new THREE.MeshBasicMaterial( { color: 0x2f4f4f});//0xff0000 } );
+    var material = new THREE.MeshBasicMaterial( { color: 0x2f4f4f });//0xff0000 } );
     var cube = new THREE.Mesh( geometry, material );
     scene.add( cube );
 
