@@ -101,7 +101,7 @@ angular.module('portfolioApp').
             startingRank =1;
 
         //direction matters.  Assume player 1 goes up, and player 2 goes down.
-        if (piece.player !== player1){
+        if (piece.player !== game.player1){
             startingRank = 6;
             direction = -1;
             
