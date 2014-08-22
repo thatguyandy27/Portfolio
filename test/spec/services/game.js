@@ -23,6 +23,43 @@ describe('Service - canvasChess: gameService', function () {
         game = gameService.newGame(player1, player2);
     });
 
+    describe("The default board", function(){
+        it("should have 8 pawns for player 1", function(){
+            for(var i = 0; i < 8; i++){
+                expect(game.board[6][i]).not.toBe(null);
+                expect(game.board[6][i].player).toBe(player1);
+                expect(game.board[6][i].getType()).toBe("pawn");
+            }
+        });
+
+        it("should have 8 pawns for player 2", function(){
+            for(var i = 0; i < 8; i++){
+                expect(game.board[1][i]).not.toBe(null);
+                expect(game.board[1][i].player).toBe(player2);
+                expect(game.board[1][i].getType()).toBe("pawn");
+            }
+        });
+
+        it("should have 2 rooks for player 1", function(){
+            expect(game.board[7][0]).not.toBe(null);
+            expect(game.board[7][0].player).toBe(player1);
+            expect(game.board[7][0].getType()).toBe("rook");
+            expect(game.board[7][7]).not.toBe(null);
+            expect(game.board[7][7].player).toBe(player1);
+            expect(game.board[7][7].getType()).toBe("rook");
+        });
+
+        it("should have 2 rooks for player 2", function(){
+            expect(game.board[0][0]).not.toBe(null);
+            expect(game.board[0][0].player).toBe(player2);
+            expect(game.board[0][0].getType()).toBe("rook");
+            expect(game.board[0][7]).not.toBe(null);
+            expect(game.board[0][7].player).toBe(player2);
+            expect(game.board[0][7].getType()).toBe("rook");
+
+        });
+    });
+
     describe("Get all of player1's opening valid moves", function(){
 
         it("should allow all pawns to move 1 or 2 spaces", function(){
@@ -290,6 +327,7 @@ describe('Service - canvasChess: gameService', function () {
             game.board[3][5] = pieceService.createPawn(player2);
             game.board[5][6] = pieceService.createPawn(player1);
 
+
             var moves = game.getValidMovesForPiece(4, 5);
             expect(moves.length).toBe(1);
             expect(moves.length).toBe(1);
@@ -297,7 +335,7 @@ describe('Service - canvasChess: gameService', function () {
 
         });
 
-        it("should not allow you to attack left diagonal when an enemy is there", function(){
+        it("should not allow you to attack right diagonal when an enemy is not there", function(){
             
             game.board[4][5] = pieceService.createPawn(player2);
             game.board[3][5] = pieceService.createPawn(player2);
