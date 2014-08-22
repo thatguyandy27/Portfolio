@@ -359,11 +359,11 @@ angular.module('portfolioApp').
         return new pieceType(player);
     }
     return {
-        createPawn: function createPawn(player){ return createPiece(Pawn, player);},
-        createKnight: function createKnight(player){ return createPiece(Knight, player);},
-        createBishop: function createBishop(player){ return createPiece(Bishop, player);},
-        createRook: function createRook(player){ return createPiece(Rook, player);},
-        createQueen: function createQueen(player){ return createPiece(Queen, player);},
-        createKing: function createKing(player){ return createPiece(King, player);}
+        createPawn: function createPawn(player){ return new Pawn(player);},
+        createKnight: function createKnight(player){ return new Knight(player);},
+        createBishop: function createBishop(player){  return new Bishop(player);},
+        createRook: function createRook(player){ return new Rook(player); },
+        createQueen: function createQueen(player){ return new Queen(player); },
+        createKing: function createKing(player){  return new King(player);}
     };
 }]);

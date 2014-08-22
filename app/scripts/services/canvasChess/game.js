@@ -6,9 +6,11 @@ angular.module('portfolioApp').
     var _kingType = "king";
 
     function findPlaceOnBoard(piece, board){
-        for( var y = 0; y < board.length; y++){
-            var row = board[y];
-            for (var x=0; x < row.length; x++){
+        var y, x, row;
+
+        for(y = 0; y < board.length; y++){
+            row = board[y];
+            for ( x=0; x < row.length; x++){
                 if (piece === row[x]){
                     return {x:x, y:y};
                 }
@@ -20,10 +22,14 @@ angular.module('portfolioApp').
 
 
     function findPiece(pieceType, player, board){
-        for( var y = 0; y < board.length; y++){
-            var row = board[y];
-            for (var x=0; x < row.length; x++){
-                if (piece.getType() === pieceType  && player === piece.player){
+        var y, x, row, piece;
+
+        for(y = 0; y < board.length; y++){
+            row = board[y];
+            for (x=0; x < row.length; x++){
+                piece = row[x];
+                if (piece !== null && piece.getType() === pieceType 
+                    && player === piece.player){
                     return {x:x, y:y};
                 }
             }
@@ -36,18 +42,18 @@ angular.module('portfolioApp').
         this.player1 = player1;
         this.player2 = player2;
         this.board = [
-            [new window.Rook(player2), new window.Knight(player2), new window.Bishop(player2), new window.Queen(player2),
-            new window.King(player2), new window.Bishop(player2), new window.Knight(player2), new window.Rook(player2)],
-            [new window.Pawn(player2),new window.Pawn(player2),new window.Pawn(player2),new window.Pawn(player2),
-            new window.Pawn(player2),new window.Pawn(player2),new window.Pawn(player2),new window.Pawn(player2)],
+            [pieceService.createRook(player2), pieceService.createKnight(player2), pieceService.createBishop(player2), pieceService.createQueen(player2),
+            pieceService.createKing(player2), pieceService.createBishop(player2), pieceService.createKnight(player2), pieceService.createRook(player2)],
+            [pieceService.createPawn(player2),pieceService.createPawn(player2),pieceService.createPawn(player2),pieceService.createPawn(player2),
+            pieceService.createPawn(player2),pieceService.createPawn(player2),pieceService.createPawn(player2),pieceService.createPawn(player2)],
             [null, null, null, null,null, null, null, null],
             [null, null, null, null,null, null, null, null],
             [null, null, null, null,null, null, null, null],
             [null, null, null, null,null, null, null, null],
-            [new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1),
-            new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1),new window.Pawn(player1)],
-            [new window.Rook(player1), new window.Knight(player1), new window.Bishop(player1), new window.Queen(player1) ,
-            new window.King(player1), new window.Bishop(player1), new window.Knight(player1), new window.Rook(player1)]];
+            [pieceService.createPawn(player1),pieceService.createPawn(player1),pieceService.createPawn(player1),pieceService.createPawn(player1),
+            pieceService.createPawn(player1),pieceService.createPawn(player1),pieceService.createPawn(player1),pieceService.createPawn(player1)],
+            [pieceService.createRook(player1), pieceService.createKnight(player1), pieceService.createBishop(player1), pieceService.createQueen(player1) ,
+            pieceService.createKing(player1), pieceService.createBishop(player1), pieceService.createKnight(player1), pieceService.createRook(player1)]];
 
         this.activePlayer = player1;
    
@@ -63,10 +69,10 @@ angular.module('portfolioApp').
 
     function getValidMovesOnBoard(x, y, game){
         var piece = game.board[y][x];
-        var validMoves = null;
+        var validMoves = [];
 
         if (piece === null){
-            return null;
+            return [];
         }
         switch(piece.getType()){
             case "pawn":
@@ -101,10 +107,13 @@ angular.module('portfolioApp').
             startingRank =1;
 
         //direction matters.  Assume player 1 goes up, and player 2 goes down.
-        if (piece.player !== game.player1){
+        if (piece.player === game.player1){
             startingRank = 6;
             direction = -1;
-            
+        }
+        else{
+            console.log(direction);
+            console.log(startingRank);
         }
 
         //move one spot
@@ -119,12 +128,14 @@ angular.module('portfolioApp').
             //TODO ENPASSANT
 
         }
+
+
         // attacking left!
-        if(x > 0 && game.board[y+ direction][x - 1] === null){
+        if(x > 0 && game.board[y+ direction][x - 1] !== null &&  game.board[y+ direction][x - 1].player !==piece.player){
             moves.push({y:y+direction, x:x - 1});
         }
         // attacking right!
-        if(x < 7 && game.board[y+ direction][x + 1] === null){
+        if(x < 7 && game.board[y+ direction][x + 1] !== null &&  game.board[y+ direction][x + 1].player !==piece.player){
             moves.push({y:y+direction, x:x + 1});
         }
 
@@ -169,7 +180,7 @@ angular.module('portfolioApp').
         }
         xIndex = x;
         // check up 
-        for(yIndex =  y + 1; yIndex >= 0; yIndex++){
+        for(yIndex =  y + 1; yIndex <= 7; yIndex++){
             currentPosition = game.board[yIndex][xIndex];
             if (currentPosition === null){
                 moves.push({y:yIndex, x:xIndex});
@@ -197,6 +208,8 @@ angular.module('portfolioApp').
                 break;
             }
         }
+
+        return moves;
     }
     
     
@@ -210,7 +223,7 @@ angular.module('portfolioApp').
         // check upperleft
         xIndex = x - 1;
         yIndex = y - 1;
-        while(xIndex >= 0 && yIndex >= 0)
+        while(xIndex >= 0 && yIndex >= 0){
             currentPosition = game.board[yIndex][xIndex];
             if (currentPosition === null){
                 moves.push({y:yIndex, x:xIndex});
@@ -230,7 +243,7 @@ angular.module('portfolioApp').
         // check upper right
         xIndex = x + 1;
         yIndex = y - 1;
-        while(xIndex <= 7 && yIndex >= 0)
+        while(xIndex <= 7 && yIndex >= 0){
             currentPosition = game.board[yIndex][xIndex];
             if (currentPosition === null){
                 moves.push({y:yIndex, x:xIndex});
@@ -250,7 +263,7 @@ angular.module('portfolioApp').
         // check lower left
         xIndex = x - 1;
         yIndex = y + 1;
-        while(xIndex >= 0 && yIndex <= 7)
+        while(xIndex >= 0 && yIndex <= 7){
             currentPosition = game.board[yIndex][xIndex];
             if (currentPosition === null){
                 moves.push({y:yIndex, x:xIndex});
@@ -270,7 +283,7 @@ angular.module('portfolioApp').
         // check lower right
         xIndex = x + 1;
         yIndex = y + 1;
-        while(xIndex <= 7 && yIndex <= 7)
+        while(xIndex <= 7 && yIndex <= 7){
             currentPosition = game.board[yIndex][xIndex];
             if (currentPosition === null){
                 moves.push({y:yIndex, x:xIndex});
@@ -286,6 +299,8 @@ angular.module('portfolioApp').
             yIndex++;
 
         }
+
+        return moves;
     }
 
     function getKingMoves(x,y,game){
@@ -358,6 +373,8 @@ angular.module('portfolioApp').
                 moves.push({y: y , x: x -1});
             }
         }
+
+        return moves;
 
     }
 
@@ -443,14 +460,14 @@ angular.module('portfolioApp').
             return (this.activePlayer == piece.player);
         },
         getValidMovesForPiece: function getValidMovesForPiece(x, y){
-            return getValidMovesOnBoard(x,y this);
+            return getValidMovesOnBoard(x,y, this);
 
         }
     };
 
 
     function newGame(player1, player2){
-        return new Game();
+        return new Game(player1, player2);
     }
 
     return {
