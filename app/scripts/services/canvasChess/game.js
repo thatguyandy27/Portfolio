@@ -112,8 +112,6 @@ angular.module('portfolioApp').
             direction = -1;
         }
         else{
-            console.log(direction);
-            console.log(startingRank);
         }
 
         //move one spot
@@ -462,6 +460,9 @@ angular.module('portfolioApp').
         getValidMovesForPiece: function getValidMovesForPiece(x, y){
             return getValidMovesOnBoard(x,y, this);
 
+        },
+        findKing: function findKing(player){
+            return findPiece("king", player, this.board);
         }
     };
 
