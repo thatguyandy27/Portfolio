@@ -58,6 +58,12 @@ describe('Service - canvasChess: gameService', function () {
             expect(game.board[0][7].getType()).toBe("rook");
 
         });
+
+        it ("should not have anyone in check", function(){
+            expect(game.isPlayerInCheck(player1).length).toBe(0);
+            expect(game.isPlayerInCheck(player1).length).toBe(0);
+        });
+
     });
 
     describe("Get all of player1's opening valid moves", function(){
@@ -824,6 +830,73 @@ describe('Service - canvasChess: gameService', function () {
         });
 
 
+        describe("determining if king is in check", function(){
+            var king1Index,
+                king2Index;
+
+            beforeEach(function(){
+                game.board = [
+                [null, null, null, null,null, null, null, null],
+                [null, null, null, null,null, null, null, null],
+                [null, null, pieceService.createKing(player2), null,null, null, null, null],
+                [null, null, null, null,null, null, null, null],
+                [null, null, null, null,null, pieceService.createKing(player1), null, null],
+                [null, null, null, null,null, null, null, null],
+                [null, null, null, null,null, null, null, null],
+                [null, null, null, null,null, null, null, null]];
+
+                king1Index = {x:5, y:4, player: player1, opponent: player2},
+                king2Index = {x:2, y:2, player: player2, opponent: player1};
+            });
+
+            it ("should have a default state of no one in check", function(){
+                expect(game.isPlayerInCheck(player1).length).toBe(0);
+                expect(game.isPlayerInCheck(player1).length).toBe(0);
+            })
+
+            it ("should be in check if the rook or queen is in the same row", function(){
+                var tests= [king1Index, king2Index];
+
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    game.board[test.y][0] = pieceService.createRook(test.opponent);
+                    game.board[test.y][7] = pieceService.createRook(test.opponent);
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:0, y:test.y});
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:7, y:test.y});
+
+                    game.board[test.y][0] = pieceService.createQueen(test.opponent);
+                    game.board[test.y][7] = pieceService.createQueen(test.opponent);
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:0, y:test.y});
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:7, y:test.y});
+
+                }
+
+            } );
+
+             it ("should be in check if the rook or queen is in the same column", function(){
+                var tests= [king1Index, king2Index];
+
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    game.board[0][test.x] = pieceService.createRook(test.opponent);
+                    game.board[7][test.x]= pieceService.createRook(test.opponent);
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:test.x, y:0});
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:test.x, y:7});
+
+                    game.board[0][test.x] = pieceService.createQueen(test.opponent);
+                    game.board[7][test.x] = pieceService.createQueen(test.opponent);
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:test.x, y:0});
+                    expect(game.isPlayerInCheck(test.player)).toContain({x:test.x, y:7});
+
+                }
+
+            } );
+
+
+        })
+
     });
+
+    
 
 });
