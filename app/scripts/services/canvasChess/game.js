@@ -16,7 +16,6 @@ angular.module('portfolioApp').
                 }
             }
         }
-
         return null;
     }
 
@@ -59,11 +58,107 @@ angular.module('portfolioApp').
    
     }
 
-    function isPlayerInCheck(player, board){
-        var king = findPiece(_kingType, player, board);
+    function isPlayerInCheck(player){
+        var kingIndex = this.findKing(player);
 
-        //enumerate 
+        var board = this.board;
+        //easiest to check each direction and see if there is a piece that can capture.
+        var threatingPieces = [],
+            validTypes=[];
 
+        function isThreatningPiece(validTypes, xIndexModifier, yIndexModifier ){
+            
+            var xIndex = kingIndex.x + xIndexModifier,
+                yIndex = kingIndex.y + yIndexModifier; 
+            
+            while (yIndex >= 0 && yIndex <= 7 && xIndex >= 0 && xIndex <= 7){
+                var piece = board[yIndex][xIndex];
+                if (piece !== null){
+
+                    if (piece.player !== player &&  validTypes.indexOf(piece.getType()) > -1){
+                        threatingPieces.push({x: xIndex, y: yIndex});
+                        return;
+
+                    }
+                }
+                xIndex += xIndexModifier;
+                yIndex += yIndexModifier;
+                validTypes.length = 2;
+            
+            }
+
+            return;
+
+        }
+
+        //check up
+        isThreatningPiece(['queen','rook', 'king'], 0, -1)
+        
+        //upper right
+        validTypes =['queen','rook', 'king'];
+        if (player === this.player1){
+            validTypes.push('pawn');
+        }
+        isThreatningPiece(validTypes, 1, -1);
+        
+        //right
+        isThreatningPiece(['queen','rook', 'king'], 1, 0);
+
+        //bottom right
+        validTypes =['queen','rook', 'king'];
+        if (player !== this.player1){
+            validTypes.push('pawn');
+        }
+        isThreatningPiece(validTypes, 1, 1);
+
+        //bottom 
+        isThreatningPiece(['queen','rook', 'king'], 0, 1);
+
+        //bottom left
+        validTypes =['queen','rook', 'king'];
+        if (player !== this.player1){
+            validTypes.push('pawn');
+        }
+        isThreatningPiece(validTypes, -1, 1);
+
+        //left
+        isThreatningPiece(['queen','rook', 'king'], -1, 0);
+
+        //upper left
+        validTypes =['queen','rook', 'king'];
+        if (player === this.player1){
+            validTypes.push('pawn');
+        }
+        isThreatningPiece(validTypes, -1, -1);
+
+        //check knights
+        // left 2 up 1
+        function checkForThreatningKnight(xIndex, yIndex){
+            if(xIndex >= 0 && xIndex <=7 && yIndex >=0 && yIndex <=7){
+                var spot = board[yIndex][xIndex];
+                if (spot !== null && spot.player != player && spot.getType() == 'knight'){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        var spots = [{x: kingIndex.x - 2, y:kingIndex.y - 1},
+            {x: kingIndex.x -1, y:kingIndex.y - 2},
+            {x: kingIndex.x + 1, y:kingIndex.y - 2},
+            {x: kingIndex.x + 2, y:kingIndex.y - 1},
+            {x: kingIndex.x + 2, y:kingIndex.y + 1},
+            {x: kingIndex.x + 1, y:kingIndex.y + 2},
+            {x: kingIndex.x - 1, y:kingIndex.y + 2},
+            {x: kingIndex.x - 2, y:kingIndex.y + 1}];
+
+        for (var index= 0; index < spots.length; index++){
+            if (checkForThreatningKnight(spots[index].x, spots[index].y)){
+                threatingPieces.push({x: spots[index].x, y:spots[index].y });
+            }
+        }
+
+        return threatingPieces;
 
     }
 
@@ -463,7 +558,8 @@ angular.module('portfolioApp').
         },
         findKing: function findKing(player){
             return findPiece("king", player, this.board);
-        }
+        },
+        isPlayerInCheck: isPlayerInCheck
     };
 
 
