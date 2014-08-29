@@ -873,7 +873,7 @@ describe('Service - canvasChess: gameService', function () {
 
             } );
 
-             it ("should be in check if the rook or queen is in the same column", function(){
+            it ("should be in check if the rook or queen is in the same column", function(){
                 var tests= [king1Index, king2Index];
 
                 for(var t =0; t < tests.length; t++){
@@ -891,6 +891,110 @@ describe('Service - canvasChess: gameService', function () {
                 }
 
             } );
+
+
+            it ("should not be in check if the rook or queen is in the same row and a piece blocks it", function(){
+                var tests= [king1Index, king2Index];
+
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    game.board[test.y][0] = pieceService.createRook(test.opponent);
+                    game.board[test.y][7] = pieceService.createQueen(test.opponent);
+                    game.board[test.y][1] = pieceService.createPawn(test.opponent);
+                    game.board[test.y][6] = pieceService.createPawn(test.opponent);
+                   
+
+                    expect(game.isPlayerInCheck(test.player).length).toBe(0);
+
+                }
+
+            } );
+
+
+            it ("should not be in check if the rook or queen is in the same column and a piece blocks it", function(){
+                var tests= [king1Index, king2Index];
+
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    game.board[0][test.x] = pieceService.createRook(test.opponent);
+                    game.board[7][test.x]= pieceService.createRook(test.opponent);
+                    game.board[1][test.x] = pieceService.createPawn(test.opponent);
+                    game.board[6][test.x]= pieceService.createPawn(test.opponent);
+                   
+
+                    expect(game.isPlayerInCheck(test.player).length).toBe(0);
+
+
+                }
+
+            } );
+
+              it ("should be in check if the bishop or queen is in the same diagonal", function(){
+                var tests= [king1Index, king2Index];
+
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    var testPositions = [{x: test.x - 2, y: test.y - 2 },
+                        {x: test.x - 2, y: test.y + 2 },
+                        {x: test.x + 2, y: test.y + 2 },
+                        {x: test.x + 2, y: test.y - 2 }];
+
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        game.board[testPositions[i].y][testPositions[i].x] = pieceService.createBishop(test.opponent);
+                    }
+
+                    var checkPositions = game.isPlayerInCheck(test.player);
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        expect(checkPositions).toContain(testPositions[i]);
+                    }
+
+
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        game.board[testPositions[i].y][testPositions[i].x] = pieceService.createQueen(test.opponent);
+                    }
+
+                    checkPositions = game.isPlayerInCheck(test.player);
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        expect(checkPositions).toContain(testPositions[i]);
+                    }
+
+                }
+
+            } );
+
+            it ("should not be in check if the bishop or queen is in the same diagonal and a piece is blocking ", function(){
+                var tests= [king1Index, king2Index];
+
+               for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+                    game.board[test.y+1][test.x+1] = pieceService.createPawn(test.player);
+                    game.board[test.y+1][test.x-1] = pieceService.createPawn(test.player);
+                    game.board[test.y-1][test.x+1] = pieceService.createPawn(test.player);
+                    game.board[test.y-1][test.x-1] = pieceService.createPawn(test.player);
+
+                    var testPositions = [{x: test.x - 2, y: test.y - 2 },
+                        {x: test.x - 2, y: test.y + 2 },
+                        {x: test.x + 2, y: test.y + 2 },
+                        {x: test.x + 2, y: test.y - 2 }];
+
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        game.board[testPositions[i].y][testPositions.x] = pieceService.createBishop(test.opponent);
+                    }
+
+                    expect(game.isPlayerInCheck(test.player).length).toBe(0);
+
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        game.board[testPositions[i].y][testPositions.x] = pieceService.createQueen(test.opponent);
+                    }
+
+                    expect(game.isPlayerInCheck(test.player).length).toBe(0);
+
+                }
+
+
+            } );
+
+
 
 
         })
