@@ -12,14 +12,19 @@ angular.module('portfolioApp')
 
     var board = boardService.createBoard();
 
-    var game = null;
     var context = angular.element('#canvas')[0].getContext('2d');
+    var selectedPiece = null;
 
     $scope.newGame = function newGame(){
 
-        game = gameService.newGame(playerService.newPlayer("local", {name: "Player1"}), 
+        $scope.game = gameService.newGame(playerService.newPlayer("local", {name: "Player1"}), 
             playerService.newPlayer("local", {name: "Player2"}));
+
+
     };
+
+
+
 
     function drawBoard(){
         board.drawBoard(context, [$scope.lightTileColor,$scope.darkTileColor]);

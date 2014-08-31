@@ -3,7 +3,12 @@
 angular.module('portfolioApp').
     factory('gameService', ['pieceService', function(pieceService){
 
-    var _kingType = "king";
+    var _kingType = "king",
+        GameState = {
+            Active: 0,
+            Stalemate: 1,
+            Checkmate: 2
+        };
 
     function findPlaceOnBoard(piece, board){
         var y, x, row;
@@ -55,7 +60,129 @@ angular.module('portfolioApp').
             pieceService.createKing(player1), pieceService.createBishop(player1), pieceService.createKnight(player1), pieceService.createRook(player1)]];
 
         this.activePlayer = player1;
-   
+        this.gameState = GameState.Active;
+        this.player1PiecesLost = [];
+        this.player2PiecesLost = [];
+        this.moveLog = [];
+    }
+
+    function anyValidMovesForPlayer(game, player){
+        var tempPiece = null
+            move, moveIndex,
+            moves, yIndex,
+            xIndex;
+
+        for(yIndex = 0; yIndex < 8; yIndex++){
+            for(xIndex = 0; xIndex < 8; xIndex++){
+                if (game.board[yIndex][xIndex] !== null && game.board[yIndex][xIndex].player === player){
+                    moves = getValidMovesOnBoard(xIndex, yIndex, game);
+
+                    for(moveIndex = 0; moveIndex < moves.length; moveIndex++ ){
+                        move = moves[moveIndex];
+                        
+                        if (isMoveValid(game, {y:yIndex, x:xIndex}, move)){
+                            return true;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    function getGameState(game){
+        var anyValidMovesForPlayer = anyValidMovesForPlayer(game.activePlayer);
+
+        if (anyValidMovesForPlayer){
+            return GameState.Active;
+        }
+        else{
+            if (isPlayerInCheck(game.activePlayer)){
+                return GameState.Checkmate;
+            }
+            else{
+                return GameState.Stalemate;
+            }
+        }
+    }
+
+
+    function makeMove(game, piecePosition, endingMove){
+
+        if (game.gameState !== GameState.Active){
+            return false;
+        }
+        var availableMoves = getValidMovesForPiece(piecePosition.x, piecePosition.y, game);
+        var moveExists = false;
+        for ( var i = 0; i < availableMoves.length; i++){
+            if (availableMoves[i].x == endingMove.x && availableMoves[i].y === endingMove.y){
+                moveExists = true;
+                break;
+            }
+        }
+
+        // make sure it is a move the piece is making
+        if(!moveExists){
+            return false;
+        }
+
+
+        // make sure it won't put them in check.
+        if (isMoveValid(game, piecePosition, endingMove)){
+            //log the move
+            game.moveLog.push({
+                start: {x: piecePosition.x, y: piecePosition.y},
+                end: { x: endingMove.x, y: endingMove.y}
+            });
+
+            //store the ending piece if it exists
+            var endingMovePiece =game.board[endingMove.y][endingMove.x];
+            if (endingMovePiece !== null){
+                if (endingMovePiece.player === game.player1){
+                    game.player1PiecesLost.push(endingMovePiece);
+                }
+                else{
+                    game.player2PiecesLost.push(endingMovePiece);
+                }
+
+            }
+
+            // move piece & null the old spot
+            game.board[endingMove.y][endingMove.x] = game.board[piecePosition.y][piecePosition.x];
+            game.board[piecePosition.y][piecePosition.x] = null;
+
+            //swap players
+            if (game.activePlayer === game.player1){
+                game.activePlayer = game.player2;
+            }
+            else{
+                game.activePlayer = game.player1;
+            }
+
+            //get the game state
+            game.gameState = getGameState(game);
+        }
+    }
+
+    function isMoveValid(game, piecePosition, endingMove){
+        var tempPiece = game.board[endingMove.y][endingMove.x];
+        var pieceToMove = game.board[piecePosition.y][piecePosition.x];
+        if (pieceToMove === null){
+            return false;
+        }
+        game[piecePosition.y][piecePosition.x] = null;
+        game[endingMove.y][endingMove.x] = pieceToMove;
+
+        var isMoveValid = isPlayerInCheck(pieceToMove.player);
+
+        game[piecePosition.y][piecePosition.x] = pieceToMove;
+        game[endingMove.y][endingMove.x] = tempPiece;
+
+        return isMoveValid;
+
     }
 
     function isPlayerInCheck(player){
@@ -569,7 +696,8 @@ angular.module('portfolioApp').
     }
 
     return {
-        newGame: newGame
+        newGame: newGame,
+        GameState: GameState
     };
 }]);
 
