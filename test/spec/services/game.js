@@ -929,7 +929,7 @@ describe('Service - canvasChess: gameService', function () {
 
             } );
 
-              it ("should be in check if the bishop or queen is in the same diagonal", function(){
+            it ("should be in check if the bishop or queen is in the same diagonal", function(){
                 var tests= [king1Index, king2Index];
 
                 for(var t =0; t < tests.length; t++){
@@ -994,7 +994,44 @@ describe('Service - canvasChess: gameService', function () {
 
             } );
 
+            
+            it ("should be in check a if the knight is in the right position", function(){
+                var tests= [king1Index, king2Index];
 
+                for(var t =0; t < tests.length; t++){
+                    var test = tests[t];
+
+                    
+                    for(var xIndex = 0; xIndex< 8; xIndex++){
+                        for(var yIndex = 0; yIndex < 8; yIndex++){
+                            if (game.board[yIndex][xIndex] === null ||game.board[yIndex][xIndex].getType() !== "king"){
+                                game.board[yIndex][xIndex] = pieceService.createKnight(test.opponent);
+                            }
+                        }
+                    }
+
+                    var testPositions = [{x: test.x - 2, y: test.y - 1 },
+                        {x: test.x - 1, y: test.y - 2 },
+
+                        {x: test.x - 1, y: test.y + 2 },
+                        {x: test.x - 2, y: test.y + 1 },
+                        
+                        {x: test.x + 2, y: test.y + 1 },
+                        {x: test.x + 1, y: test.y + 2 },
+
+                        {x: test.x + 2, y: test.y - 1 },
+                        {x: test.x + 1, y: test.y - 2 }];
+
+                    var checkPositions = game.isPlayerInCheck(test.player);
+                    expect(checkPositions.length).toBe(8);
+
+                    for (var i = testPositions.length - 1; i >= 0; i--) {
+                        expect(checkPositions).toContain(testPositions[i]);
+                    }
+
+                }
+
+            } );
 
 
         })
