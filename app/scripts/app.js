@@ -39,6 +39,10 @@ angular
         templateUrl: 'views/threejsdemo.html',
         controller: 'threeJsDemoCtrl'
       })
+       .when('/three-js-bubbles', {
+        templateUrl: 'views/threejsbubbles.html',
+        controller: 'threeJsBubbleCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
