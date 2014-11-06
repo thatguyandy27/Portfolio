@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 
 /**
  * @ngdoc function
@@ -9,6 +9,20 @@
  */
 angular.module('portfolioApp')
   .controller('threeJsBubbleCtrl', function ($scope) {
+
+    function createBubble(radius, color, x, y, z){
+        this.State = Bubble.States.Active;
+
+    }
+
+    Bubble.States = {
+        Active: 0,
+        Popping: 1,
+        Inactive: 2
+    };
+
+
+
     var height = window.innerHeight -  200;
     var width = window.innerWidth - 20;
     var scene = new THREE.Scene();

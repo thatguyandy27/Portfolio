@@ -43,6 +43,10 @@ angular
         templateUrl: 'views/threejsbubbles.html',
         controller: 'threeJsBubbleCtrl'
       })
+      .when('/three-js-solarsystem', {
+        templateUrl: 'views/threeJsSolarSystem.html.html',
+        controller: 'threeJsSolarSystemCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
