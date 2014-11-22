@@ -8,6 +8,6 @@
  * Controller of the portfolioApp
  */
 angular.module('portfolioApp')
-  .controller('MainCtrl', function ($scope) {
-   
-  });
+    .controller('MainCtrl', ['$scope', function ($scope) {
+
+}]);

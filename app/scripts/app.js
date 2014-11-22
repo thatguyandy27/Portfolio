@@ -17,19 +17,30 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .config(function ($routeProvider) {
+  .config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+//    $locationProvider.html5Mode(true);
+
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        activeTab: ''
       })
       .when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+        controller: 'AboutCtrl',
+        activeTab: 'about'
+      })
+      .when('/bubble-popper', {
+        templateUrl: 'views/bubblePopper.html',
+        controller: 'bubblePopperCtrl',
+        activeTab: 'bubblePopper'
       })
       .when('/css-solar-system', {
         templateUrl: 'views/cssSolarSystem.html',
-        controller: 'CssSolarSystemCtrl'
+        controller: 'CssSolarSystemCtrl',
+        activeTab: 'cssSolarSystem'
       })
       .when('/canvas-chess', {
         templateUrl: 'views/canvasChess.html',
@@ -50,4 +61,9 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }]).run(['$rootScope', '$location', function($rootScope, $location){
+   var path = function() { return $location.path();};
+   $rootScope.$watch(path, function(newVal, oldVal){
+     $rootScope.activeTab = (newVal)? newVal.substr(1) : '';
+   });
+}]);

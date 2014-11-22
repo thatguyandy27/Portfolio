@@ -15,28 +15,27 @@
     <link rel='stylesheet' href='styles/csssolarsystem.css' />
     <!-- endbuild -->
   </head>
-  <body ng-app="portfolioApp">
+  <body ng-app="portfolioApp" >
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="container-fluid">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-          <li><a ng-href="#/css-solar-system">CSS Solar System</a></li>
+    <div class="container" ng-controller='rootCtrl'>
+      <nav class="header">
+        <h2 class='appTitle'>Andy 2.0</h2>
+        <ul class="nav">
+          <li ng-class="{active: activeTab == ''}" ><a ng-href="#">Home</a></li>
+          <li ng-class="{active: activeTab == 'css-solar-system'}"><a ng-href="#/css-solar-system">CSS Solar System</a></li>
+          <li ng-class="{active: activeTab == 'bubble-popper'}"><a ng-href="#/bubble-popper">Bubble Popper</a></li>
+          <li ng-class="{active: activeTab == 'about'}"><a ng-href="#/about">About</a></li>
         </ul>
-        <h3 class="text-muted">portfolio</h3>
-      </div>
+      </nav>
 
       <div ng-view=""></div>
 
-      <div class="footer">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
-      </div>
+      <footer class="footer">
+      </footer>
     </div>
 
 
@@ -85,8 +84,10 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/root.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src='scripts/controllers/bubblePopper.js'></script>
         <script src="scripts/controllers/csssolarsystem.js"></script>
         <script src='scripts/controllers/threejsDemo.js'></script>
         <script src='scripts/controllers/canvasChess.js'></script>
