@@ -166,7 +166,7 @@
     @include orbit-rate(16s);
 
     .planet{
-        background-color:darkblue;
+        background-color:cyan;
         border:1px solid white;
         @include planet-size(30px);
     }
@@ -177,7 +177,7 @@
     @include orbit-rate(18s);
 
     .planet{
-        background-color:cyan;
+        background-color:darkblue;
         border:1px solid white;
         @include planet-size(30px);
     }

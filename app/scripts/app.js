@@ -58,6 +58,10 @@ angular
         templateUrl: 'views/threeJsSolarSystem.html.html',
         controller: 'threeJsSolarSystemCtrl'
       })
+      .when('/degrees-of-walder-frey', {
+        templateUrl: 'views/relationshipMapGOT.html',
+        controller: 'relationshipMapGOTCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
