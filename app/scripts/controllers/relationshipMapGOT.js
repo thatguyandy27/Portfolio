@@ -22,10 +22,16 @@ angular.module('portfolioApp')
         var width = 2000,
             height = 1000
 
-        var svg = d3.select(".svgContainer").append("svg")
-            .attr("width", width)
-            .attr("height", height).append("g")
-                .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom));
+var svg = d3.select(".svgContainer").append("svg")
+    .attr("width", width)
+    .attr("height", height).append("g")
+    .call(d3.behavior.zoom().scaleExtent([1, 8]).on("zoom", zoom))
+  .append("g");
+
+svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height", height);
 
         function zoom() {
           svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
