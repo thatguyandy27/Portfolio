@@ -7,8 +7,8 @@ angular.module('portfolioApp').
         linksUrl = '../../data/got/links.json';
 
     //links:{
-    // source: int,
-    // target: int,
+    // id2: int,
+    // id1: int,
     // type: int (related/married/etc.)
     //}
 
@@ -54,7 +54,7 @@ angular.module('portfolioApp').
             var link = links[index];
 
             // does the id match
-            if (link.target == chracterId || link.source == chracterId){
+            if (link.id1 == chracterId || link.id2 == chracterId){
                 found = false;
 
                 // check to see if the link already exists
@@ -86,7 +86,7 @@ angular.module('portfolioApp').
             found = false,
             links = this.retrieveChracterLinks(char1);
 
-        //indexesUsed[char1] = true;
+       // indexesUsed[char1] = true;
 
         for (var i = links.length - 1; i >= 0; i--) {
             paths.push([links[i]]);
@@ -97,20 +97,20 @@ angular.module('portfolioApp').
 
             var currentNode = path[path.length - 1];
 
-            if (currentNode.target == char2 || currentNode.source == char2){
+            if (currentNode.id1 == char2 || currentNode.id2 == char2){
                 return path;
             }
 
             links = [];
 
-            if (!indexUsed[currentNode.target] ){
-                indexesUsed[currentNode.target]= true;
-                links = this.retrieveChracterLinks(currentNode.target);
+            if (!indexesUsed[currentNode.id1] ){
+                indexesUsed[currentNode.id1]= true;
+                links = this.retrieveChracterLinks(currentNode.id1);
 
             }
-            else if (!indexesUsed[currentNode.source]){
-                indexesUsed[currentNode.source]= true;
-                links = this.retrieveChracterLinks(currentNode.source);
+            else if (!indexesUsed[currentNode.id2]){
+                indexesUsed[currentNode.id2]= true;
+                links = this.retrieveChracterLinks(currentNode.id2);
             }
 
             //copy the current path and add one for each new node to explore. 
