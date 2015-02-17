@@ -58,7 +58,7 @@ angular
         templateUrl: 'views/threeJsSolarSystem.html.html',
         controller: 'threeJsSolarSystemCtrl'
       })
-      .when('/degrees-of-walder-frey', {
+      .when('/six-degrees-of-westeros', {
         templateUrl: 'views/relationshipMapGOT.html',
         controller: 'relationshipMapGOTCtrl'
       })

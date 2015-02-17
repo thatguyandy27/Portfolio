@@ -8,18 +8,17 @@
  * Controller of the portfolioApp
  */
 angular.module('portfolioApp')
-    .controller('relationshipMapGOTCtrl', ['$scope', '$http', '$q', function ($scope, $http, $q) {
+    .controller('relationshipMapGOTCtrl', ['$scope', 'sixDegreesOfWesterosService', function ($scope, sixDegreesOfWesterosService) {
    
    $scope.isLoading = true;
    $scope.message = "Retrieving data";
 
-   $q.all([
-        $http.get('../../data/got/nodes.json'),
-        $http.get('../../data/got/links.json'),
-    ]).then(function(responses){
+   var characterService  = sixDegreesOfWesterosService.getCharacterService();
 
-        var nodes = responses[0].data;
-        var links = responses[1].data;
+   characterService.retrieveData().then(function(responses){
+
+        var nodes = characterService.characters;
+        var links = characterService.links;
         var width = 2000,
             height = 1000
 
