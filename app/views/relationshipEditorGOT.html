@@ -1,0 +1,71 @@
+<div class='header'>
+    <select ng-model='selectedChar' ng-options='char.name for char in characters'></select>
+    <label for='name'>Name:</label><input type='text' name='name' id='name' ng-model='selectedChar.name' />
+    <label for='house'>house:</label><input type='text' name='house' id='house' ng-model='selectedChar.house' />
+
+</div>
+
+<ol class='tableContainer'>
+    <li ng-repeat='link in links'>
+        <span>
+            <img class='charIcon' src='{{getImage(link.target)}}' />
+        </span> 
+        <span class='name header'>
+            {{getLinkName(link)}}
+        </span>
+        <span class='house'>
+            <label>House:</label>
+            {{getLinkHouse(link)}}
+        </span> 
+        <span class='relationship'>
+            <label>Relationship:</label>
+            <select ng-model='link.type'>
+                <option value='marriage'>Marriage</option>
+                <option value='parental'>Parent/Child</option>
+                <option value='sibling'>Sibling</option>
+                <option value='related'>Related - Other(Aunt, Cousin, Uncle)</option>
+                <option value='household'>Household Member></option>
+            </select>
+        </span>
+        <span>
+            <button ng-click='moveUp(link)'>Move Up</button>
+        </span>
+        <span>
+            <button ng-click='deleteLink(link)'>Delete Link</button>
+        </span>
+
+    </li>
+
+    <li>
+        <select ng-model='newChar' ng-options='char.name for char in characters'></select>
+
+        <span class='relationship'>
+            <label>Relationship:</label>
+            <select ng-model='newRelationship'>
+                <option value='marriage'>Marriage</option>
+                <option value='parental'>Parent/Child</option>
+                <option value='sibling'>Sibling</option>
+                <option value='related'>Related - Other(Aunt, Cousin, Uncle)</option>
+                <option value='household'>Household Member></option>
+            </select>
+        </span>
+        <span>
+            <button ng-click='addNew();'>AddNew</button>
+        </span>
+
+    </li>
+</ol>
+
+
+<div class='actions'>
+    <button ng-click='exportJSON();'>Export JSON</button>
+</div>
+
+<div>
+    <div>CHARACTERS</div>
+    <div>{{charJSON}}</div>
+</div>
+<div>
+    <div>LINKS</div>
+    <div>{{linkJSON}}</div>
+</div>
