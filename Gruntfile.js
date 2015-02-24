@@ -70,12 +70,18 @@ module.exports = function (grunt) {
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729
+        // middleware: function(connect, options, middlewares){
+         
+        // onCreateServer: function (server, connect, options){
+        //   var server = require('./testServer/server.js');
+        //   server.addEndpoints(server, connect, options);
+        // }
       },
       livereload: {
         options: {
           open: true,
-          middleware: function (connect) {
-            return [
+          middleware: function (connect, options, middlewares) {
+            var stuff = [
               connect.static('.tmp'),
               connect().use(
                 '/bower_components',
@@ -83,6 +89,12 @@ module.exports = function (grunt) {
               ),
               connect.static(appConfig.app)
             ];
+
+            var server = require('./testServer/server.js');
+            server.addEndpoints(connect, options, stuff);
+            console.log("HERE");
+
+            return stuff;
           }
         }
       },
@@ -163,7 +175,7 @@ module.exports = function (grunt) {
     // Automatically inject Bower components into the app
     wiredep: {
       options: {
-        cwd: '<%= yeoman.app %>'
+//        cwd: '<%= yeoman.app %>'
       },
       app: {
         src: ['<%= yeoman.app %>/index.html'],

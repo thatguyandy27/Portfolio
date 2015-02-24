@@ -3,7 +3,7 @@
 angular.module('portfolioApp').
     factory('sixDegreesOfWesterosService', ['$q', '$http', function($q, $http){
 
-    var chracterDataUrl = '../../data/got/nodes.json',
+    var characterDataUrl = '../../data/got/nodes.json',
         linksUrl = '../../data/got/links.json';
 
     //links:{
@@ -29,7 +29,7 @@ angular.module('portfolioApp').
         var service = this;
 
         return $q.all([
-            $http.get(chracterDataUrl),
+            $http.get(characterDataUrl),
             $http.get(linksUrl),
         ]).then(function(responses){
 
@@ -40,13 +40,20 @@ angular.module('portfolioApp').
         });
     };
 
-    CharacterService.prototype.retrieveChracterLinks = function retrieveChracterLinks(chracterId, existingLinks){
+    CharacterService.prototype.saveData = function saveData(){
+
+        $http.post("/server/characters", this.characters);
+        $http.post("/server/links", this.links);
+
+    };
+
+    CharacterService.prototype.retrieveCharacterLinks = function retrieveCharacterLinks(characterId, existingLinks){
         existingLinks = existingLinks || [];
 
         var links = this.links,
             index = 0,
             length = links.length,
-            chracterLinks = [],
+            characterLinks = [],
             found = false;
 
         // loop through all link
@@ -54,7 +61,7 @@ angular.module('portfolioApp').
             var link = links[index];
 
             // does the id match
-            if (link.id1 == chracterId || link.id2 == chracterId){
+            if (link.id1 == characterId || link.id2 == characterId){
                 found = false;
 
                 // check to see if the link already exists
@@ -68,13 +75,13 @@ angular.module('portfolioApp').
 
                 // if not found then 
                 if (!found){
-                    chracterLinks.push(link);
+                    characterLinks.push(link);
                 }
 
             }
         }
 
-        return chracterLinks;
+        return characterLinks;
 
     };
 
@@ -84,7 +91,7 @@ angular.module('portfolioApp').
         var paths = [],
             indexesUsed =[],
             found = false,
-            links = this.retrieveChracterLinks(char1);
+            links = this.retrieveCharacterLinks(char1);
 
        // indexesUsed[char1] = true;
 
@@ -105,12 +112,12 @@ angular.module('portfolioApp').
 
             if (!indexesUsed[currentNode.id1] ){
                 indexesUsed[currentNode.id1]= true;
-                links = this.retrieveChracterLinks(currentNode.id1);
+                links = this.retrieveCharacterLinks(currentNode.id1);
 
             }
             else if (!indexesUsed[currentNode.id2]){
                 indexesUsed[currentNode.id2]= true;
-                links = this.retrieveChracterLinks(currentNode.id2);
+                links = this.retrieveCharacterLinks(currentNode.id2);
             }
 
             //copy the current path and add one for each new node to explore. 

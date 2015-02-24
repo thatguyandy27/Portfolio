@@ -62,6 +62,11 @@ angular
         templateUrl: 'views/relationshipMapGOT.html',
         controller: 'relationshipMapGOTCtrl'
       })
+      .when('/six-degrees-of-westeros-editor', {
+        templateUrl: 'views/relationshipEditorGOT.html',
+        controller: 'relationshipEditorGOTCtrl'
+      })
+
       .otherwise({
         redirectTo: '/'
       });

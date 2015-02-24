@@ -1,14 +1,27 @@
+<section id='relationshipEditor'>
+<div class='actions'>
+    <button ng-click='exportJSON();'>Export JSON</button>
+</div>
+
+
 <div class='header'>
+    <span>
+        <img class='charIcon' src='{{getImage()}}' />
+    </span> 
     <select ng-model='selectedChar' ng-options='char.name for char in characters'></select>
+
     <label for='name'>Name:</label><input type='text' name='name' id='name' ng-model='selectedChar.name' />
-    <label for='house'>house:</label><input type='text' name='house' id='house' ng-model='selectedChar.house' />
+    <label for='house'>House:</label><input type='text' name='house' id='house' ng-model='selectedChar.house' />
+    <label for='image'>Image:</label><input type='text' name='image' id='image' ng-model='selectedChar.image' />
+    <a href='{{"http://awoiaf.westeros.org" + selectedChar.link}}'>LINK</a>
+
 
 </div>
 
 <ol class='tableContainer'>
     <li ng-repeat='link in links'>
         <span>
-            <img class='charIcon' src='{{getImage(link.target)}}' />
+            <img class='charIcon' src='{{getImage(link)}}' />
         </span> 
         <span class='name header'>
             {{getLinkName(link)}}
@@ -19,16 +32,18 @@
         </span> 
         <span class='relationship'>
             <label>Relationship:</label>
-            <select ng-model='link.type'>
+            <select ng-change='linkTypeChange(link, $index);' ng-model='link.type'>
                 <option value='marriage'>Marriage</option>
                 <option value='parental'>Parent/Child</option>
                 <option value='sibling'>Sibling</option>
-                <option value='related'>Related - Other(Aunt, Cousin, Uncle)</option>
-                <option value='household'>Household Member></option>
+                <option value='related'>Related - Other(Aunt, Cousin, Uncle, Adopted)</option>
+                <option value='household'>Household Member</option>
+                <option value='bounded'>Sworn To</option>
+                <option value='interaction'>Major Interaction</option>
             </select>
         </span>
         <span>
-            <button ng-click='moveUp(link)'>Move Up</button>
+            <button ng-click='moveUp(link, $index)' ng-disabled='$index <= 0'>Move Up</button>
         </span>
         <span>
             <button ng-click='deleteLink(link)'>Delete Link</button>
@@ -41,12 +56,13 @@
 
         <span class='relationship'>
             <label>Relationship:</label>
-            <select ng-model='newRelationship'>
+            <select  ng-model='newRelationship'>
                 <option value='marriage'>Marriage</option>
                 <option value='parental'>Parent/Child</option>
                 <option value='sibling'>Sibling</option>
                 <option value='related'>Related - Other(Aunt, Cousin, Uncle)</option>
-                <option value='household'>Household Member></option>
+                <option value='household'>Household Member</option>
+                <option value='bounded'>Sworn To</option>
             </select>
         </span>
         <span>
@@ -61,11 +77,13 @@
     <button ng-click='exportJSON();'>Export JSON</button>
 </div>
 
-<div>
+<div class='characters'>
     <div>CHARACTERS</div>
-    <div>{{charJSON}}</div>
+    <textarea ng-model='charJSON' rows='100'></textarea>
 </div>
-<div>
+<div class='links'>
     <div>LINKS</div>
-    <div>{{linkJSON}}</div>
+    <textarea ng-model='linkJSON' rows='100'></textarea>
 </div>
+
+</section>
