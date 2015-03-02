@@ -188,4 +188,21 @@ angular.module('portfolioApp')
         };
     };
 
+    $scope.deleteRecord = function deleteRecord(){
+        if (window.confirm("Are you sure you wish to delete?")){
+            var character = $scope.selectedChar;
+
+            characterService.deleteRecord(character);
+
+            var newCharSelection = $scope.selectedChar.id;
+            if (newCharSelection >= $scope.characters.length){
+                newCharSelection = $scope.characters.length - 1;
+            }
+
+
+            $scope.selectedChar = $scope.characters[newCharSelection];
+        }
+
+    };
+
 }]);

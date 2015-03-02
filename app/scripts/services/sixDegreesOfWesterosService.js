@@ -46,6 +46,55 @@ angular.module('portfolioApp').
         $http.post("/server/links", this.links);
 
     };
+    CharacterService.prototype.deleteRecord = function deleteRecord(character){
+        deleteCharacterLinks(character.id, this.links);
+        var index = character.id,
+            links = this.links;
+
+
+        for(var i = index; i< this.characters.length -1; i++){
+            this.characters[i] = this.characters[i+1];
+            this.characters[i].id = i;
+            replaceLinkIds(links, i+1, i);
+
+        }
+
+        this.characters.pop();
+
+    };
+
+    function replaceLinkIds(links, oldId, newId){
+        for(var i = 0; i < links.length; i++){
+            var link = links[i];
+            if (link.id1 == oldId){
+                link.id1 = newId;
+            }
+            if (link.id2 == oldId){
+                link.id2 = newId;
+            }
+        }
+    }
+
+
+
+
+
+    function deleteCharacterLinks(characterId, links){
+        var index = 0;
+
+        // loop through all link
+        for(index = 0; index < links.length; index++ ){
+            var link = links[index];
+
+            // does the id match
+            if (link.id1 == characterId || link.id2 == characterId){
+                links.splice(index, 1);
+                index--;
+
+            }
+        }
+
+    }
 
     CharacterService.prototype.retrieveCharacterLinks = function retrieveCharacterLinks(characterId, existingLinks){
         existingLinks = existingLinks || [];

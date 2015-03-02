@@ -15,7 +15,7 @@
     <label for='image'>Image:</label><input type='text' name='image' id='image' ng-model='selectedChar.image' />
     <a href='{{"http://awoiaf.westeros.org" + selectedChar.link}}'>LINK</a>
 
-
+    <button ng-click='deleteRecord();'>Delete</button>
 </div>
 
 <ol class='tableContainer'>
@@ -77,7 +77,7 @@
     <button ng-click='exportJSON();'>Export JSON</button>
 </div>
 
-<div class='characters'>
+<!-- <div class='characters'>
     <div>CHARACTERS</div>
     <textarea ng-model='charJSON' rows='100'></textarea>
 </div>
@@ -85,5 +85,5 @@
     <div>LINKS</div>
     <textarea ng-model='linkJSON' rows='100'></textarea>
 </div>
-
+ -->
 </section>
