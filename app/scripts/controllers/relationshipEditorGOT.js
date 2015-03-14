@@ -205,4 +205,15 @@ angular.module('portfolioApp')
 
     };
 
+    $scope.deleteUnusedLinks = function(){
+        var links = $scope.links;
+
+        for(var i = links.length - 1; i > -1; i--){
+            var link = links[i];
+            if (link.type == null || link.type == ''){
+                $scope.deleteLink(link);
+            }
+        }
+    }
+
 }]);

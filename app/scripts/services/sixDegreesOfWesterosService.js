@@ -178,7 +178,7 @@ angular.module('portfolioApp').
             }
         }
 
-        return null
+        return [];
 
     };
 
