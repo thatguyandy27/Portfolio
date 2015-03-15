@@ -8,7 +8,7 @@
     <span>
         <img class='charIcon' src='{{getImage()}}' />
     </span> 
-    <select ng-model='selectedChar' ng-options='char.name for char in characters'></select>
+    <select ng-model='selectedChar' ng-options="char.name for char in characters | orderBy:'name'"></select>
 
     <label for='name'>Name:</label><input type='text' name='name' id='name' ng-model='selectedChar.name' />
     <label for='house'>House:</label><input type='text' name='house' id='house' ng-model='selectedChar.house' />
