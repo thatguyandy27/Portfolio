@@ -52,7 +52,7 @@
     </li>
 
     <li>
-        <select ng-model='newChar' ng-options='char.name for char in characters'></select>
+        <select ng-model='newChar' ng-options='char.name for char in characters | orderBy:"name"'></select>
 
         <span class='relationship'>
             <label>Relationship:</label>
