@@ -114,6 +114,25 @@ nav.header{
 }
 
 
+#main{
+  width: 860px;
+  margin-left: auto;
+  margin-right: auto;
+
+  .main-header{
+    text-align: center;
+    color: white;
+    font-size: 2em;
+    margin-top:150px;
+  }
+
+  p{
+    color:white;
+    text-align: center;
+  }
+}
+
+
 
 
 @font-face {

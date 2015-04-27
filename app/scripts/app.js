@@ -66,6 +66,10 @@ angular
         templateUrl: 'views/relationshipEditorGOT.html',
         controller: 'relationshipEditorGOTCtrl'
       })
+      .when('/three-js-planet', {
+        templateUrl: 'views/threejsPlanet.html',
+        controller: 'threejsPlanetCtrl'
+      })
 
       .otherwise({
         redirectTo: '/'
