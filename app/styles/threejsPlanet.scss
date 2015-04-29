@@ -1,0 +1,41 @@
+.overlay.options{
+
+  position: absolute;
+  right: 0;
+  opacity: .5;
+  margin-right: 10px;
+  color: white;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  transition: opacity .25s ease-in-out, height .5s ease-in-out;
+  -moz-transition: opacity .25s ease-in-out, height .5s ease-in-out;
+  -webkit-transition: opacity .25s ease-in-out, height .5s ease-in-out;
+  width:200px;
+  overflow: hidden;
+  height:50px;
+   
+  &:hover{
+    opacity: 1;
+
+  }
+
+  &.toggle{
+    height: 20px;
+  }
+
+  .row{
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-top:5px
+
+
+  }
+
+  .two-column{
+      width:50%;
+      display: inline-block;
+  }
+
+}
+

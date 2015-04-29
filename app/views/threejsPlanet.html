@@ -1,4 +1,19 @@
-<div class='overlay options'>
-    <select ng-options='object.name for object in objects' ng-model='selectedObject'></select>
+<div id='three-js-planet'>
+    <div class='overlay options' ng-class='{"toggle": !showSettings}'>
+        <div class='row'>
+            <span class='two-column'>
+                <span>Settings</span> 
+            </span><span class='two-column'>
+                <button ng-click='toggleSettings()'>{{showSettings? "Hide": "Show"}}</button>
+            </span>
+        </div>
+        <div class='row'>
+            <span class='two-column'>
+                <label>Object:</label>
+            </span><span class='two-column'>
+                <select ng-options='object.name for object in objects' ng-model='selectedObject'></select>
+            </span>
+        </div>
+    </div>
+    <canvas id='planetCanvas'></canvas>
 </div>
-<canvas id='planetCanvas'></canvas>

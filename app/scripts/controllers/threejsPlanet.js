@@ -3,12 +3,17 @@
 angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'planetService', function($scope, planetService){
     var scene, ambientLight, light,camera, renderer, spaceObject;
     $scope.objects = planetService.retrieveAll();
+    $scope.showSettings= true;
 
     $scope.selectedObject = $scope.objects[3]; //earth
 
     $scope.$watch('selectedObject', function(){
         updateObject();
     });
+
+    $scope.toggleSettings = function(){
+        $scope.showSettings = !$scope.showSettings;
+    };
 
     function updateObject(){
         if (scene == null){
