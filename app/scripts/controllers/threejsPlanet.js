@@ -10,6 +10,11 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
     $scope.$watch('selectedObject', function(){
         updateObject();
     });
+    $scope.lightSettings = {
+        x:0, 
+        y:15,
+        z:50,
+    }
 
     $scope.toggleSettings = function(){
         $scope.showSettings = !$scope.showSettings;
@@ -22,10 +27,10 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
         if (spaceObject != null){
             scene.remove(spaceObject);
         }
-        var geometry   = new THREE.SphereGeometry(0.5, 32, 32)
-        var material = $scope.selectedObject.getMaterial();
-
-        spaceObject = new THREE.Mesh(geometry, material);
+    //    
+        spaceObject = $scope.selectedObject.createObject();
+  //      var material =
+//        spaceObject = new THREE.Mesh(geometry, material);
         
         scene.add(spaceObject);
 
@@ -33,12 +38,12 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
     function initScene(){
         scene = new THREE.Scene();
-        ambientLight = new THREE.AmbientLight( 0x000000 );
+        ambientLight = new THREE.AmbientLight( 0x404040 );
         scene.add( ambientLight );
-
-        light   = new THREE.DirectionalLight( 0xcccccc, 1 )
-        light.position.set(5,5,5)
-        scene.add( light )
+        var lightSettings = $scope.lightSettings;
+        light   = new THREE.DirectionalLight( 0xcccccc, 1 );
+        light.position.set(lightSettings.x,lightSettings.y,lightSettings.z);
+        scene.add( light );
         light.castShadow    = true
         light.shadowCameraNear  = 0.01
         light.shadowCameraFar   = 15
@@ -49,8 +54,8 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
         light.shadowCameraBottom= -1
         light.shadowBias    = 0.001
         light.shadowDarkness    = 0.2
-        light.shadowMapWidth    = 1024
-        light.shadowMapHeight   = 1024
+        light.shadowMapWidth    = 1024 *2;
+        light.shadowMapHeight   = 1024 *2;
 
         camera = new THREE.PerspectiveCamera( 20, window.innerWidth / window.innerHeight, 0.1, 1000 );
         camera.position.z = 5;
