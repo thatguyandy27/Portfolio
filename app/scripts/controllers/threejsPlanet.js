@@ -38,29 +38,31 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
     function initScene(){
         scene = new THREE.Scene();
-        ambientLight = new THREE.AmbientLight( 0x404040 );
+        ambientLight = new THREE.AmbientLight( 0x888888 );
         scene.add( ambientLight );
         var lightSettings = $scope.lightSettings;
-        light   = new THREE.DirectionalLight( 0xcccccc, 1 );
+        light  = new THREE.DirectionalLight( 0xcccccc, .5 );
         light.position.set(lightSettings.x,lightSettings.y,lightSettings.z);
         scene.add( light );
-        light.castShadow    = true
-        light.shadowCameraNear  = 0.01
-        light.shadowCameraFar   = 15
-        light.shadowCameraFov   = 45
-        light.shadowCameraLeft  = -1
-        light.shadowCameraRight =  1
-        light.shadowCameraTop   =  1
-        light.shadowCameraBottom= -1
-        light.shadowBias    = 0.001
-        light.shadowDarkness    = 0.2
+        light.castShadow    = true;
+        light.shadowCameraNear  = 0.01;
+        light.shadowCameraFar   = 15;
+        light.shadowCameraFov   = 45;
+        light.shadowCameraLeft  = -1;
+        light.shadowCameraRight =  1;
+        light.shadowCameraTop   =  1;
+        light.shadowCameraBottom= -1;
+        light.shadowBias    = 0.001;
+        light.shadowDarkness    = 0.2;
         light.shadowMapWidth    = 1024 *2;
         light.shadowMapHeight   = 1024 *2;
 
-        camera = new THREE.PerspectiveCamera( 20, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.z = 5;
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
+        camera.position.z = 1.5;
 
-        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("planetCanvas")});
+        renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("planetCanvas"),
+            antialias:true
+        });
         renderer.setSize( window.innerWidth, window.innerHeight - 50 );
         // document.getElementById('view').appendChild( renderer.domElement );
 

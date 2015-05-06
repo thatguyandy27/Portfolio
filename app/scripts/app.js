@@ -70,6 +70,10 @@ angular
         templateUrl: 'views/threejsPlanet.html',
         controller: 'threejsPlanetCtrl'
       })
+      .when('/image-merge-demo', {
+        templateUrl: 'views/transparentImageDemo.html',
+        controller: 'transparentImageDemoCtrl'
+      })
 
       .otherwise({
         redirectTo: '/'

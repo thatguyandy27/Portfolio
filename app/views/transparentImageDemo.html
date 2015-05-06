@@ -1,0 +1,21 @@
+<div id='transparentImageDemo'>
+    <div class='source'>
+        <h3>Source</h3>
+        <canvas width='1024' height='512' id='source'></canvas>
+    </div>
+    <div class='alpha'>
+        <h3>Alpha</h3>
+        <canvas width='1024' height='512' id='alpha'></canvas>
+    </div>
+    <div class='destination'>
+        <h3>Destination</h3>
+        <div class='mergeProperties'>
+            <div class='row'>
+                <label>DrawingRate:</label>
+                <input type='number' ng-model='mergeProperties.speed' />
+            </div>
+
+        </div>
+        <canvas width='1024' height='512' id='destination'></canvas>
+    </div>
+</div>

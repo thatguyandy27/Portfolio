@@ -3,6 +3,60 @@
 angular.module('portfolioApp').
     factory('planetService', [function(){
 
+    function createTransparentImage(mainImage, alphaImage, callback){
+        var canvasResult = document.createElement('canvas'),
+            canvasAlpha = document.createElement('canvas');
+        
+        canvasResult.width = canvasAlpha.width = 1024;
+        canvasResult.height = canvasAlpha.height = 512;
+
+        var contextResult  = canvasResult.getContext('2d'),
+            contextAlpha = canvasAlpha.getContext('2d');
+        
+        var imageMap  = new Image();
+        imageMap.addEventListener("load", function() {
+
+            canvasResult.width = canvasAlpha.width = imageMap.width;
+            canvasResult.height = canvasAlpha.height = imageMap.height;
+
+            contextResult.drawImage(imageMap, 0,0);
+            var dataMap = contextResult.getImageData(0,0, canvasResult.width, canvasResult.height);
+
+            var alphaMap = new Image();
+            alphaMap.addEventListener("load", function(){
+                contextAlpha.drawImage(alphaMap, 0,0);
+
+                var alphaDataMap = contextAlpha.getImageData(0,0, canvasAlpha.width, canvasAlpha.height);
+
+                var offset = 0;
+                for(var y=0; y< imageMap.height; y++){
+                    for(var x=0; x< imageMap.width; x++){
+                        // move to rgb A 
+                        
+                        //should be the "A" of the X Y coordinate
+                        // alpha is not offset because it is greyscale...
+                        dataMap.data[offset + 3] = 255 - alphaDataMap.data[offset] / 4;
+
+                        //move to next rgba;
+                        offset += 4;
+                    }
+                }
+
+
+                contextResult.putImageData(dataMap, 0,0);
+                callback();
+            });
+
+            alphaMap.src = alphaImage;
+
+        });
+
+        imageMap.src = mainImage;
+
+        return canvasResult;
+
+    }
+
     function retrieveAll(){
         return [{
             name:"Sun",
@@ -42,18 +96,39 @@ angular.module('portfolioApp').
         },{
             name: "Earth",
             createObject: function(options){ 
+                var radius = .5, widthSegments = 32, heightSegments = 32;
 
-                var geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                var geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
 
                 var material = new THREE.MeshPhongMaterial({
                     map: THREE.ImageUtils.loadTexture('images/planets/earthmap1k.jpg'),
                     bumpMap: THREE.ImageUtils.loadTexture('images/planets/earthbump1k.jpg'),
                     bumpScale: .05,
                     specularMap: THREE.ImageUtils.loadTexture("images/planets/earthspec1k.jpg"),
-                    specular: new THREE.Color('grey')
+                   // specular: new THREE.Color('grey')
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                var textureResult = createTransparentImage('images/planets/earthcloudmap.jpg','images/planets/earthcloudmaptrans.jpg', function(){
+                    if (cloudMaterial && cloudMaterial.map){
+                        cloudMaterial.map.needsUpdate = true;
+                    }
+                });
+
+                var cloudGeometry    = new THREE.SphereGeometry(radius + .01, widthSegments, heightSegments)
+                var cloudMaterial    = new THREE.MeshPhongMaterial({
+                    map     : new THREE.Texture(textureResult),
+                    side        : THREE.DoubleSide,
+                    transparent : true,
+                    opacity     : 0.2,
+                });
+
+                var cloudMesh  = new THREE.Mesh(cloudGeometry, cloudMaterial);
+
+                var planetMesh  = new THREE.Mesh(geometry, material);
+
+                planetMesh.add(cloudMesh);
+
+                return  planetMesh ;
             }
         },{
             name: "Mars",
