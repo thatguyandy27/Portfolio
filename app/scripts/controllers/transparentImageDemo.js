@@ -44,7 +44,7 @@ angular.module('portfolioApp').
                 destinationData.data[mergeProperties.offset+0]  = sourceData.data[mergeProperties.offset+0];
                 destinationData.data[mergeProperties.offset+1]  = sourceData.data[mergeProperties.offset+1];
                 destinationData.data[mergeProperties.offset+2]  = sourceData.data[mergeProperties.offset+2];
-                destinationData.data[mergeProperties.offset+3]  = 255 -  alphaData.data[mergeProperties.offset+0]/4;
+                destinationData.data[mergeProperties.offset+3]  = 255 -  alphaData.data[mergeProperties.offset+0];
 
                 mergeProperties.x++;
                 mergeProperties.offset+=4;
@@ -81,9 +81,6 @@ angular.module('portfolioApp').
                 alphaContext.drawImage(alphaImg, 0, 0);
                 
                 startOverlay();
-//                destinationContext.drawImage(sourceImg, 0, 0, sourceImg.width, sourceImg.height);
-//                destinationContext.globalCompositeOperation ='xor';
-//                destinationContext.drawImage(alphaImg, 0,0, alphaImg.width, alphaImg.height);
             
             });
 
