@@ -35,7 +35,7 @@ angular.module('portfolioApp').
                         
                         //should be the "A" of the X Y coordinate
                         // alpha is not offset because it is greyscale...
-                        dataMap.data[offset + 3] = 255 - alphaDataMap.data[offset] / 4;
+                        dataMap.data[offset + 3] = 255 - alphaDataMap.data[offset];
 
                         //move to next rgba;
                         offset += 4;
@@ -105,7 +105,8 @@ angular.module('portfolioApp').
                     bumpMap: THREE.ImageUtils.loadTexture('images/planets/earthbump1k.jpg'),
                     bumpScale: .05,
                     specularMap: THREE.ImageUtils.loadTexture("images/planets/earthspec1k.jpg"),
-                   // specular: new THREE.Color('grey')
+                    specular: new THREE.Color('grey'),
+                    shininess: 10
                 });
 
                 var textureResult = createTransparentImage('images/planets/earthcloudmap.jpg','images/planets/earthcloudmaptrans.jpg', function(){
@@ -114,12 +115,12 @@ angular.module('portfolioApp').
                     }
                 });
 
-                var cloudGeometry    = new THREE.SphereGeometry(radius + .01, widthSegments, heightSegments)
+                var cloudGeometry    = new THREE.SphereGeometry(radius + .005, widthSegments, heightSegments)
                 var cloudMaterial    = new THREE.MeshPhongMaterial({
                     map     : new THREE.Texture(textureResult),
                     side        : THREE.DoubleSide,
                     transparent : true,
-                    opacity     : 0.2,
+                    opacity     : 0.8,
                 });
 
                 var cloudMesh  = new THREE.Mesh(cloudGeometry, cloudMaterial);

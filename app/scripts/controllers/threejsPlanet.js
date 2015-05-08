@@ -58,12 +58,12 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
         light.shadowMapHeight   = 1024 *2;
 
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
-        camera.position.z = 1.5;
+        camera.position.z = 2.5;
 
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("planetCanvas"),
             antialias:true
         });
-        renderer.setSize( window.innerWidth, window.innerHeight - 50 );
+        renderer.setSize( window.innerWidth, window.innerHeight - 55 );
         // document.getElementById('view').appendChild( renderer.domElement );
 
     }
