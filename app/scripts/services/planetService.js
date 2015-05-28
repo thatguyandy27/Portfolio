@@ -218,13 +218,50 @@ angular.module('portfolioApp').
         },{
             name: "Jupiter",
             createObject: function(){ 
-                var geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                var radius = .5;
+                var geometry = new THREE.SphereGeometry(radius, 32, 32);
 
                 var material = new THREE.MeshPhongMaterial({
                     map:THREE.ImageUtils.loadTexture('images/planets/jupiter2_2k.jpg')
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                 var ringTexture = createTransparentImage('images/planets/saturnringcolor.jpg', 'images/planets/saturnringpattern.gif', function(){
+                    if (ringMaterial && ringMaterial.map){
+                        ringMaterial.map.needsUpdate = true;
+                    }
+                });
+
+                var innerRadius = radius +.01,
+                    outerRadius = radius + .2,
+                    ringThetaSegments = 64,
+                    ringPhiSegments = 8;
+
+                var ringGeometry = createRingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+                //new THREE.RingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+
+                var ringMaterial = new THREE.MeshPhongMaterial({
+                    map: new THREE.Texture(ringTexture),
+                    side: THREE.DoubleSide,
+                    transparent:true,
+                    opacity: .9
+                });
+                ringGeometry.faceVertexUvs[0].push( new THREE.Vector2( 
+                    innerRadius/(ringThetaSegments-1), outerRadius/ (ringPhiSegments-1) ) );
+
+                var ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+                var planetMesh = new THREE.Mesh(geometry, material);
+                ringMesh.lookAt(new THREE.Vector3(0,1,0));
+
+
+                ringMesh.receiveShadow = true;
+                ringMesh.castShadow = true;
+                planetMesh.receiveShadow = true;
+                planetMesh.castShadow=  true;
+                planetMesh.add(ringMesh);
+
+
+                return  planetMesh;
+
             }
         },{
             name: "Saturn",
@@ -242,7 +279,7 @@ angular.module('portfolioApp').
                 });
 
                 var innerRadius = radius +.01,
-                    outerRadius = radius + .5,
+                    outerRadius = radius + .8,
                     ringThetaSegments = 64,
                     ringPhiSegments = 8;
 
@@ -290,11 +327,45 @@ angular.module('portfolioApp').
                 var ringGeometry = new THREE.RingGeometry(radius + .01, radius + .5,  10);
 
 
+
+                var ringTexture = createTransparentImage('images/planets/uranusringcolour.jpg', 'images/planets/uranusringtrans.gif', function(){
+                    if (ringMaterial && ringMaterial.map){
+                        ringMaterial.map.needsUpdate = true;
+                    }
+                });
+
+                var innerRadius = radius +.01,
+                    outerRadius = radius + .1,
+                    ringThetaSegments = 64,
+                    ringPhiSegments = 8;
+
+                var ringGeometry = createRingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+                //new THREE.RingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+
+                var ringMaterial = new THREE.MeshPhongMaterial({
+                    map: new THREE.Texture(ringTexture),
+                    side: THREE.DoubleSide,
+                    transparent:true,
+                    opacity: .9
+                });
+                ringGeometry.faceVertexUvs[0].push( new THREE.Vector2( 
+                    innerRadius/(ringThetaSegments-1), outerRadius/ (ringPhiSegments-1) ) );
+
+                var ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+                var planetMesh = new THREE.Mesh(geometry, material);
+                ringMesh.lookAt(new THREE.Vector3(0,0,1));
+
+
+                ringMesh.receiveShadow = true;
+                ringMesh.castShadow = true;
+                planetMesh.receiveShadow = true;
+                planetMesh.castShadow=  true;
+                planetMesh.add(ringMesh);
+
+
+                return  planetMesh;
+
                 //var ring = new THREE.TorusGeometry(1);
-
-
-
-                return  new THREE.Mesh(geometry, material);
             }
         },{
             name: "Neptune",
