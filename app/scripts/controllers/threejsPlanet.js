@@ -59,6 +59,8 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
         camera.position.z = 2.5;
+        camera.position.y = .5;
+        camera.lookAt(new THREE.Vector3(0,0,0));
 
         renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("planetCanvas"),
             antialias:true

@@ -57,6 +57,78 @@ angular.module('portfolioApp').
 
     }
 
+    // a good chunk of this algorithm is from http://planetmaker.wthr.us/#
+    function createRingGeometry(innerRadius, outerRadius, thetaSegments, phiSegments, thetaStart, thetaLength){
+
+        var geometry = new THREE.Geometry();
+
+        innerRadius = innerRadius || 0;
+        outerRadius = outerRadius || 50;
+        // start at 0
+        thetaStart = thetaStart || 0;
+        // go all the way around by default.
+        thetaLength = thetaLength || Math.PI * 2;
+
+        // 
+        thetaSegments = thetaSegments != null ? Math.max( 3, thetaSegments ) : 8;
+        phiSegments = phiSegments != null ? Math.max( 3, phiSegments ) : 8;
+
+        var phiIndex, thetaIndex, uvs = [], radius = innerRadius, radiusStep = ( ( outerRadius - innerRadius ) / phiSegments);
+
+        // creating the verticies of the circle.
+
+
+        for( phiIndex = 0; phiIndex <= phiSegments; phiIndex++) {//concentric circles inside ring
+            for( thetaIndex = 0; thetaIndex <= thetaSegments; thetaIndex++) {//number of segments per circle
+
+                var vertex = new THREE.Vector3();
+                
+                vertex.x = radius * Math.cos( thetaStart + thetaIndex / thetaSegments * thetaLength );
+                vertex.y = radius * Math.sin( thetaStart + thetaIndex / thetaSegments * thetaLength );
+                
+                geometry.vertices.push( vertex );
+                uvs.push( new THREE.Vector2((phiIndex / phiSegments), ( vertex.y / radius + 1 ) / 2));
+            }
+            
+            radius += radiusStep;
+
+        }
+
+        // creating the faces
+
+        var n = new THREE.Vector3( 0, 0, 1 );
+    
+        for( phiIndex = 0; phiIndex < phiSegments; phiIndex++) {//concentric circles inside ring
+
+            for( thetaIndex = 0; thetaIndex <= thetaSegments; thetaIndex++) {//number of segments per circle
+                
+                var v1, v2, v3;
+
+                v1 = thetaIndex + (thetaSegments * phiIndex) + phiIndex;
+                v2 = thetaIndex + (thetaSegments * phiIndex) + thetaSegments + phiIndex;
+                v3 = thetaIndex + (thetaSegments * phiIndex) + thetaSegments + 1 + phiIndex;
+                
+                geometry.faces.push( new THREE.Face3( v1, v2, v3, [ n, n, n ] ) );
+                geometry.faceVertexUvs[ 0 ].push( [ uvs[ v1 ], uvs[ v2 ], uvs[ v3 ] ]);
+                
+                v1 = thetaIndex + (thetaSegments * phiIndex) + phiIndex;
+                v2 = thetaIndex + (thetaSegments * phiIndex) + thetaSegments + 1 + phiIndex;
+                v3 = thetaIndex + (thetaSegments * phiIndex) + 1 + phiIndex;
+                
+                geometry.faces.push( new THREE.Face3( v1, v2, v3, [ n, n, n ] ) );
+                geometry.faceVertexUvs[ 0 ].push( [ uvs[ v1 ], uvs[ v2 ], uvs[ v3 ] ]);
+
+            }
+        }
+                 
+      //  geometry.computeCentroids();
+        geometry.computeFaceNormals();
+        geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(), radius);
+
+        return geometry;
+
+    }
+
     function retrieveAll(){
         return [{
             name:"Sun",
@@ -157,17 +229,54 @@ angular.module('portfolioApp').
         },{
             name: "Saturn",
             createObject: function(){
-                var geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                var radius = .5;
+                var geometry = new THREE.SphereGeometry(radius, 32, 32);
                 var material = new THREE.MeshPhongMaterial({
                     map: THREE.ImageUtils.loadTexture('images/planets/saturnmap.jpg')
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                var ringTexture = createTransparentImage('images/planets/saturnringcolor.jpg', 'images/planets/saturnringpattern.gif', function(){
+                    if (ringMaterial && ringMaterial.map){
+                        ringMaterial.map.needsUpdate = true;
+                    }
+                });
+
+                var innerRadius = radius +.01,
+                    outerRadius = radius + .5,
+                    ringThetaSegments = 64,
+                    ringPhiSegments = 8;
+
+                var ringGeometry = createRingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+                //new THREE.RingGeometry(innerRadius, outerRadius, ringThetaSegments, ringPhiSegments);
+
+                var ringMaterial = new THREE.MeshPhongMaterial({
+                    map: new THREE.Texture(ringTexture),
+                    side: THREE.DoubleSide,
+                    transparent:true,
+                    opacity: .9
+                });
+                ringGeometry.faceVertexUvs[0].push( new THREE.Vector2( 
+                    innerRadius/(ringThetaSegments-1), outerRadius/ (ringPhiSegments-1) ) );
+
+                var ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
+                var planetMesh = new THREE.Mesh(geometry, material);
+                ringMesh.lookAt(new THREE.Vector3(0,1,0));
+
+
+                ringMesh.receiveShadow = true;
+                ringMesh.castShadow = true;
+                planetMesh.receiveShadow = true;
+                planetMesh.castShadow=  true;
+                planetMesh.add(ringMesh);
+
+
+                return  planetMesh;
             }
         },{
             name: "Uranus",
             createObject: function(){
-                var geometry = new THREE.SphereGeometry(0.5, 32, 32);
+                var radius = .5;
+                var geometry = new THREE.SphereGeometry(radius, 32, 32);
 
 
                 var material =  new THREE.MeshPhongMaterial({
@@ -178,7 +287,10 @@ angular.module('portfolioApp').
                     createShadow:true
                 });
 
-                var ring = new THREE.TorusGeometry(1);
+                var ringGeometry = new THREE.RingGeometry(radius + .01, radius + .5,  10);
+
+
+                //var ring = new THREE.TorusGeometry(1);
 
 
 
