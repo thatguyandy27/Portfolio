@@ -138,7 +138,12 @@ angular.module('portfolioApp').
                 });
                 var geometry = new THREE.SphereGeometry(0.5, 32, 32);
 
-                return  new THREE.Mesh(geometry, material);
+                var sun = new THREE.Mesh(geometry, material);
+                sun.animation = function (){
+                    this.rotation.y += .01;
+                };
+
+                return sun;
             }
 
         },{
@@ -150,7 +155,14 @@ angular.module('portfolioApp').
                     bumpMap: THREE.ImageUtils.loadTexture('images/planets/mercurybump.jpg'),
                     bumpScale:.005
                 });
-                return  new THREE.Mesh(geometry, material);
+
+                var mercury = new THREE.Mesh(geometry, material);
+                mercury.animation = function (){
+                    this.rotation.y += .01;
+                };
+
+                return mercury;
+
             }
         },{
             name: "Venus",
@@ -163,7 +175,13 @@ angular.module('portfolioApp').
                     bumpScale: .005
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                var venus = new THREE.Mesh(geometry, material);
+                venus.animation = function (){
+                    this.rotation.y -= .001;
+                };
+
+                return venus;
+
             }
         },{
             name: "Earth",
@@ -201,6 +219,11 @@ angular.module('portfolioApp').
 
                 planetMesh.add(cloudMesh);
 
+
+                planetMesh.animation = function (){
+                    this.rotation.y += .01;
+                };
+
                 return  planetMesh ;
             }
         },{
@@ -213,7 +236,14 @@ angular.module('portfolioApp').
                     bumpMap: THREE.ImageUtils.loadTexture('images/planets/marsbump1k.jpg'),
                     bumpScale: .05
                 });
-                return  new THREE.Mesh(geometry, material);
+
+                var mars = new THREE.Mesh(geometry, material);
+                mars.animation = function (){
+                   this.rotation.y += .01;
+                };
+
+                return mars;
+
             }
         },{
             name: "Jupiter",
@@ -231,8 +261,8 @@ angular.module('portfolioApp').
                     }
                 });
 
-                var innerRadius = radius +.01,
-                    outerRadius = radius + .2,
+                var innerRadius = radius +.1,
+                    outerRadius = radius + .3,
                     ringThetaSegments = 64,
                     ringPhiSegments = 8;
 
@@ -259,6 +289,9 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
+                planetMesh.animation = function (){
+                    this.rotation.y += .01;
+                };
 
                 return  planetMesh;
 
@@ -306,6 +339,9 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
+                planetMesh.animation = function (){
+                    this.rotation.y += .01;
+                };
 
                 return  planetMesh;
             }
@@ -326,16 +362,14 @@ angular.module('portfolioApp').
 
                 var ringGeometry = new THREE.RingGeometry(radius + .01, radius + .5,  10);
 
-
-
                 var ringTexture = createTransparentImage('images/planets/uranusringcolour.jpg', 'images/planets/uranusringtrans.gif', function(){
                     if (ringMaterial && ringMaterial.map){
                         ringMaterial.map.needsUpdate = true;
                     }
                 });
 
-                var innerRadius = radius +.01,
-                    outerRadius = radius + .1,
+                var innerRadius = radius +.1,
+                    outerRadius = radius + .4,
                     ringThetaSegments = 64,
                     ringPhiSegments = 8;
 
@@ -353,7 +387,7 @@ angular.module('portfolioApp').
 
                 var ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
                 var planetMesh = new THREE.Mesh(geometry, material);
-                ringMesh.lookAt(new THREE.Vector3(0,0,1));
+                ringMesh.lookAt(new THREE.Vector3(0,1,0));
 
 
                 ringMesh.receiveShadow = true;
@@ -362,8 +396,17 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
+                var uranus = new THREE.Object3D();
+                uranus.add(planetMesh);
 
-                return  planetMesh;
+//                planetMesh.rotation.x = 90 * Math.PI /180;
+//                planetMesh.rotation.y = 45 * Math.PI /180;
+
+                uranus.animation = function (){
+                  this.rotation.y += .01;
+                };
+
+                return  uranus;
 
                 //var ring = new THREE.TorusGeometry(1);
             }
@@ -376,7 +419,12 @@ angular.module('portfolioApp').
                     map: THREE.ImageUtils.loadTexture("images/planets/neptunemap.jpg")
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                var neptune = new THREE.Mesh(geometry, material);
+                neptune.animation = function (){
+                    this.rotation.y += .01;
+                };
+
+                return neptune;
             }
         },{
             name: "Pluto",
@@ -388,7 +436,12 @@ angular.module('portfolioApp').
                     bumpScale: .005
                 });
 
-               return  new THREE.Mesh(geometry, material);
+                var pluto = new THREE.Mesh(geometry, material);
+                pluto.animation = function (){
+                    this.rotation.y += .01;
+                };
+
+                return pluto;
             }
         },{
             name: "Moon",
@@ -400,7 +453,12 @@ angular.module('portfolioApp').
                     bumpScale: .005
                 });
 
-                return  new THREE.Mesh(geometry, material);
+                var moon = new THREE.Mesh(geometry, material);
+                moon.animation = function (){
+                     this.rotation.y += .01;
+                };
+
+                return moon;
             }
         }
         ];

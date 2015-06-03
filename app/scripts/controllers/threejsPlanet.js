@@ -72,8 +72,8 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
     function render() {
         requestAnimationFrame(render);
-        spaceObject.rotation.y += 0.01;
-
+       // spaceObject.rotation.y += 0.01;
+       spaceObject.animation();
         renderer.render(scene, camera);
     }
 
