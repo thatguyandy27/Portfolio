@@ -139,8 +139,11 @@ angular.module('portfolioApp').
                 var geometry = new THREE.SphereGeometry(0.5, 32, 32);
 
                 var sun = new THREE.Mesh(geometry, material);
+                sun.rotateOnAxis(new THREE.Vector3(0,0,1), -5.25 * Math.PI / 180);
+
+                var speed = .2;
                 sun.animation = function (){
-                    this.rotation.y += .01;
+                   this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
 
                 return sun;
@@ -157,8 +160,9 @@ angular.module('portfolioApp').
                 });
 
                 var mercury = new THREE.Mesh(geometry, material);
+                var speed = .2;
                 mercury.animation = function (){
-                    this.rotation.y += .01;
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
 
                 return mercury;
@@ -176,8 +180,11 @@ angular.module('portfolioApp').
                 });
 
                 var venus = new THREE.Mesh(geometry, material);
+                venus.rotateOnAxis(new THREE.Vector3(0,0,1), -177 * Math.PI / 180);
+
+                var count = .2;
                 venus.animation = function (){
-                    this.rotation.y -= .001;
+                      this.rotateOnAxis(new THREE.Vector3(0,-1,0), -count * Math.PI / 180);
                 };
 
                 return venus;
@@ -219,9 +226,12 @@ angular.module('portfolioApp').
 
                 planetMesh.add(cloudMesh);
 
+               // planetMesh.rotation.z = -23 * Math.PI / 180;
+                planetMesh.rotateOnAxis(new THREE.Vector3(0,0,1), -23 * Math.PI / 180);
 
+                var count = .2;
                 planetMesh.animation = function (){
-                    this.rotation.y += .01;
+                    planetMesh.rotateOnAxis(new THREE.Vector3(0,1,0), count * Math.PI / 180);
                 };
 
                 return  planetMesh ;
@@ -238,8 +248,11 @@ angular.module('portfolioApp').
                 });
 
                 var mars = new THREE.Mesh(geometry, material);
+                mars.rotateOnAxis(new THREE.Vector3(0,0,1), -25 * Math.PI / 180);
+
+                var speed = .2;
                 mars.animation = function (){
-                   this.rotation.y += .01;
+                  mars.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
 
                 return mars;
@@ -289,8 +302,12 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
+                var speed = .2;
+
+                planetMesh.rotateOnAxis(new THREE.Vector3(0,0,1), -3 * Math.PI / 180);
+
                 planetMesh.animation = function (){
-                    this.rotation.y += .01;
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
 
                 return  planetMesh;
@@ -339,9 +356,14 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
+
+                planetMesh.rotateOnAxis(new THREE.Vector3(0,0,1), -26 * Math.PI / 180);
+                var speed = .2;
+
                 planetMesh.animation = function (){
-                    this.rotation.y += .01;
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
+
 
                 return  planetMesh;
             }
@@ -396,17 +418,21 @@ angular.module('portfolioApp').
                 planetMesh.castShadow=  true;
                 planetMesh.add(ringMesh);
 
-                var uranus = new THREE.Object3D();
-                uranus.add(planetMesh);
+               // var uranus = new THREE.Object3D();
+               // uranus.add(planetMesh);
 
 //                planetMesh.rotation.x = 90 * Math.PI /180;
 //                planetMesh.rotation.y = 45 * Math.PI /180;
 
-                uranus.animation = function (){
-                  this.rotation.y += .01;
+                planetMesh.rotateOnAxis(new THREE.Vector3(0,0,1), -97 * Math.PI / 180);
+                var speed = .2;
+
+                planetMesh.animation = function (){
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), -speed * Math.PI / 180);
                 };
 
-                return  uranus;
+
+                return  planetMesh;
 
                 //var ring = new THREE.TorusGeometry(1);
             }
@@ -420,9 +446,14 @@ angular.module('portfolioApp').
                 });
 
                 var neptune = new THREE.Mesh(geometry, material);
+
+                neptune.rotateOnAxis(new THREE.Vector3(0,0,1), -28 * Math.PI / 180);
+                var speed = .2;
+
                 neptune.animation = function (){
-                    this.rotation.y += .01;
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
                 };
+
 
                 return neptune;
             }
@@ -437,8 +468,13 @@ angular.module('portfolioApp').
                 });
 
                 var pluto = new THREE.Mesh(geometry, material);
+
+
+                pluto.rotateOnAxis(new THREE.Vector3(0,0,1), -122 * Math.PI / 180);
+                var speed = .2;
+
                 pluto.animation = function (){
-                    this.rotation.y += .01;
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), -speed * Math.PI / 180);
                 };
 
                 return pluto;
@@ -454,9 +490,11 @@ angular.module('portfolioApp').
                 });
 
                 var moon = new THREE.Mesh(geometry, material);
+                moon.rotateOnAxis(new THREE.Vector3(0,0,1), -6.68 * Math.PI / 180);
+                var speed = .2;
                 moon.animation = function (){
-                     this.rotation.y += .01;
-                };
+                    this.rotateOnAxis(new THREE.Vector3(0,1,0), speed * Math.PI / 180);
+               };
 
                 return moon;
             }

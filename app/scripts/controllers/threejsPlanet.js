@@ -59,6 +59,7 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
         camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 1000 );
         camera.position.z = 2.5;
+        //adding y to look at rings 
         camera.position.y = .5;
         camera.lookAt(new THREE.Vector3(0,0,0));
 
@@ -73,7 +74,7 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
     function render() {
         requestAnimationFrame(render);
        // spaceObject.rotation.y += 0.01;
-       spaceObject.animation();
+       spaceObject.animation()
         renderer.render(scene, camera);
     }
 
