@@ -1,7 +1,7 @@
 'use strict'
 
 angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'planetService', function($scope, planetService){
-    var scene, ambientLight, light,camera, renderer, spaceObject;
+    var scene, ambientLight, light,camera, renderer, spaceObject, controls;
     $scope.objects = planetService.retrieveAll();
     $scope.showSettings= true;
 
@@ -69,12 +69,20 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
         renderer.setSize( window.innerWidth, window.innerHeight - 55 );
         // document.getElementById('view').appendChild( renderer.domElement );
 
+        controls = new THREE.OrbitControls(camera, document.getElementById("planetCanvas"));
+        controls.addEventListener('change', render);
+
+    }
+
+    function animate(){
+        requestAnimationFrame(animate);
+        render();
+        controls.update();
     }
 
     function render() {
-        requestAnimationFrame(render);
-       // spaceObject.rotation.y += 0.01;
-       spaceObject.animation()
+        // spaceObject.rotation.y += 0.01;
+        spaceObject.animation();
         renderer.render(scene, camera);
     }
 
@@ -89,7 +97,7 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
 
     initScene();
     updateObject();
-    render();
+    animate();
 
 }]);
 
