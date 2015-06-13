@@ -274,8 +274,8 @@ angular.module('portfolioApp').
                     }
                 });
 
-                var innerRadius = radius +.1,
-                    outerRadius = radius + .3,
+                var innerRadius = radius +.25,
+                    outerRadius = radius + .42,
                     ringThetaSegments = 64,
                     ringPhiSegments = 8;
 
@@ -286,7 +286,7 @@ angular.module('portfolioApp').
                     map: new THREE.Texture(ringTexture),
                     side: THREE.DoubleSide,
                     transparent:true,
-                    opacity: .9
+                    opacity: .4
                 });
                 ringGeometry.faceVertexUvs[0].push( new THREE.Vector2( 
                     innerRadius/(ringThetaSegments-1), outerRadius/ (ringPhiSegments-1) ) );
@@ -328,8 +328,8 @@ angular.module('portfolioApp').
                     }
                 });
 
-                var innerRadius = radius +.01,
-                    outerRadius = radius + .8,
+                var innerRadius = radius +.1,
+                    outerRadius = radius + .7,
                     ringThetaSegments = 64,
                     ringPhiSegments = 8;
 
