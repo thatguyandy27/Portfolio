@@ -1,16 +1,7 @@
-'use strict';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:CsssolarsystemCtrl
- * @description
- * # CsssolarsystemCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-  .controller('bubblePopperCtrl', ['bubbleService', '$scope', function (bubbleService, $scope) {
+const BubblePopperCtrl = function (bubbleService, $scope) {
     var bubbles = [];
-    var canvas = angular.element('#canvas')[0];
+    var canvas = document.getElementById('canvas');
     var context = canvas.getContext('2d'),
         animationFrameId;
 
@@ -123,5 +114,9 @@ angular.module('portfolioApp')
         cancelAnimationFrame(animationFrameId);
     });
 
+};
 
-}]);
+BubblePopperCtrl.$inject = ['bubbleService', '$scope'];
+
+export default BubblePopperCtrl;
+

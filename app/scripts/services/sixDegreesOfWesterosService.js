@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('portfolioApp').
-    factory('sixDegreesOfWesterosService', ['$q', '$http', function($q, $http){
+export default ['$q', '$http', function($q, $http){
 
     var characterDataUrl = '../../data/got/nodes.json',
         linksUrl = '../../data/got/links.json';
@@ -185,4 +184,4 @@ angular.module('portfolioApp').
     return {
         getCharacterService: function(){ return new CharacterService();}
     };
-}]);
+}];

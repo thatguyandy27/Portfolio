@@ -1,7 +1,4 @@
-'use strict';
-
-angular.module('portfolioApp').
-    factory('gameService', ['pieceService', function(pieceService){
+const GameService = function(pieceService){
 
     var _kingType = "king",
         GameState = {
@@ -699,6 +696,10 @@ angular.module('portfolioApp').
         newGame: newGame,
         GameState: GameState
     };
-}]);
+};
+
+GameService.$inject = ['pieceService'];
+
+export default GameService;
 
 

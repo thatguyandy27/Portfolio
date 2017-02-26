@@ -1,5 +1,6 @@
 'use strict';
 
+import module from '../app-module.js';
 /**
  * @ngdoc overview
  * @name portfolioApp
@@ -8,16 +9,8 @@
  *
  * Main module of the application.
  */
-angular
-  .module('portfolioApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
-    'ngRoute',
-    'ngSanitize',
-    'ngTouch'
-  ])
-  .config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
+
+module.config([ '$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 //    $locationProvider.html5Mode(true);
 
 

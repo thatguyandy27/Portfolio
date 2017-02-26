@@ -1,14 +1,6 @@
-'use strict';
+import d3 from 'd3';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-    .controller('relationshipMapGOTCtrl', ['$scope', 'sixDegreesOfWesterosService', function ($scope, sixDegreesOfWesterosService) {
+const RelationshipMapGOTCtrl = function ($scope, sixDegreesOfWesterosService) {
    
     var startingRecords = [
        // 1927, //walder frey
@@ -259,82 +251,9 @@ angular.module('portfolioApp')
         // }, 100);
 
     });    
-}]);
+};
 
+RelationshipMapGOTCtrl.$inject = ['$scope', 'sixDegreesOfWesterosService'];
 
-    // var characters = [ {
-    //         'name': "Walder Frey",
-    //         'image': 'http://awoiaf.westeros.org/images/e/e6/Old_Walder_Frey.jpg',
-    //         'id': 0,
-    //         x: width/2,
-    //         y: height/2
-    //     },
-    //     {
-    //         'name': 'Perra Royce',
-    //         'image': 'http://awoiaf.westeros.org/images/e/ed/Royce.png',
-    //         'id':1
-    //     },
-    //     {
-    //         'name': 'Stevron Frey',
-    //         'image': 'http://awoiaf.westeros.org/images/f/fa/Stevron_Frey.png',
-    //         'id':2
-    //     },
-    //     {
-    //         name: 'Emmon Frey',
-    //         'image':  'http://awoiaf.westeros.org/images/thumb/6/6e/Emmon_Frey_TheMico.jpg/250px-Emmon_Frey_TheMico.jpg', 
-    //         id: 3
-    //     },
-    //     {
-    //         name: 'Bethany Rosby',
-    //         image: 'http://awoiaf.westeros.org/images/3/3f/House_Rosby.PNG', 
-    //         id: 4
-    //     },
-    //     {
-    //         name: 'Roslin Frey', 
-    //         image: 'http://awoiaf.westeros.org/images/thumb/9/95/Roslin.jpg/300px-Roslin.jpg',
-    //         id: 5
-    //     },
-    //     {
-    //         name: 'Edmure Tully',
-    //         image: 'http://awoiaf.westeros.org/images/5/56/Edmure_Tully.jpg',
-    //         id: 6
-    //     }
-    // ];
-
-    // var links = [{
-    //     source: 0, target:1, type:'Marrage'
-    // },
-    // {
-    //     source:0, target:2, type: 'Child'
-    // },
-    // {
-    //     source:1, target:2, type: 'Child'
-    // },
-    // {
-    //     source:3, target:2, type: 'Sibling'
-    // },
-    // {
-    //     source:0, target:3, type: 'Child'
-    // },
-    // {
-    //     source:1, target:3, type: 'Child'
-    // },
-    // {
-    //     source: 0, target:4, type:'Marrage'
-    // },
-    // {
-    //     source:0, target:5, type: 'Child'
-    // },
-    // {
-    //     source:4, target:5, type: 'Child'
-    // },
-    // {
-    //     source:2, target:5, type: 'Sibling'
-    // },
-    // {
-    //     source:3, target:5, type: 'Sibling'
-    // },
-    // {
-    //     source: 5, target:6, type:'Marrage'
-    // }];
+export default RelationshipMapGOTCtrl;
 

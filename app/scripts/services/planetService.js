@@ -1,7 +1,6 @@
-'use strict';
+import THREE from 'three/three.js';
 
-angular.module('portfolioApp').
-    factory('planetService', [function(){
+export default function(){
 
     function createTransparentImage(mainImage, alphaImage, callback){
         var canvasResult = document.createElement('canvas'),
@@ -506,4 +505,4 @@ angular.module('portfolioApp').
         retrieveAll: retrieveAll
     };
 
-}]);
+};

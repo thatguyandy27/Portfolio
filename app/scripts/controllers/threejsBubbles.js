@@ -1,14 +1,6 @@
- 'use strict';
+ import THREE from 'three/three.js';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:CsssolarsystemCtrl
- * @description
- * # CsssolarsystemCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-  .controller('threeJsBubbleCtrl', function ($scope) {
+const ThreeJSBubbleCtrl = function ($scope) {
 
     function createBubble(radius, color, x, y, z){
         this.State = Bubble.States.Active;
@@ -20,9 +12,7 @@ angular.module('portfolioApp')
         Popping: 1,
         Inactive: 2
     };
-
-
-
+    
     var height = window.innerHeight -  200;
     var width = window.innerWidth - 20;
     var scene = new THREE.Scene();
@@ -165,4 +155,8 @@ angular.module('portfolioApp')
         };
     }
 
-});
+}
+
+ThreeJSBubbleCtrl.$inject = ['$scope'];
+
+export default ThreeJSBubbleCtrl;

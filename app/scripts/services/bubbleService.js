@@ -1,7 +1,4 @@
-'use strict';
-
-angular.module('portfolioApp').
-    factory('bubbleService', [function(){
+export default function(){
 
     function Particle(mass,charge){
         if (mass == null) mass = 1;
@@ -214,4 +211,4 @@ angular.module('portfolioApp').
         Vector2D: Vector2D
     };
 
-}]);
+};
