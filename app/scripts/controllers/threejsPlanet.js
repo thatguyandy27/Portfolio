@@ -1,6 +1,6 @@
-'use strict'
+import THREE from 'three/three.js';
 
-angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'planetService', function($scope, planetService){
+const ThreeJSPlanetCtrl = function($scope, planetService){
     var scene, ambientLight, light,camera, renderer, spaceObject, controls;
     $scope.objects = planetService.retrieveAll();
     $scope.showSettings= true;
@@ -27,11 +27,8 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
         if (spaceObject != null){
             scene.remove(spaceObject);
         }
-    //    
+  
         spaceObject = $scope.selectedObject.createObject();
-  //      var material =
-//        spaceObject = new THREE.Mesh(geometry, material);
-        
         scene.add(spaceObject);
 
     }
@@ -99,5 +96,9 @@ angular.module('portfolioApp').controller('threejsPlanetCtrl', ['$scope',  'plan
     updateObject();
     animate();
 
-}]);
+};
+
+ThreeJSPlanetCtrl.$inject = ['$scope', 'planetService'];
+
+export default ThreeJSPlanetCtrl;
 

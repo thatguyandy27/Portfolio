@@ -1,7 +1,4 @@
-'use strict';
-
-angular.module('portfolioApp').
-    factory('pieceService', [function(){
+const PieceService = function(){
 
     function Piece(){
 
@@ -366,4 +363,6 @@ angular.module('portfolioApp').
         createQueen: function createQueen(player){ return new Queen(player); },
         createKing: function createKing(player){  return new King(player);}
     };
-}]);
+};
+
+export default PieceService;

@@ -1,7 +1,5 @@
-'use strict';
 
-angular.module('portfolioApp').
-    factory('boardService', [function(){
+const BoardService = function(){
 
     var X_START = 10,
         Y_START = 10,
@@ -84,4 +82,6 @@ angular.module('portfolioApp').
     return {
         createBoard: function createBoard(){return new Board(X_START, Y_START, WIDTH, HEIGHT, X_COUNT, Y_COUNT);}
     };
-}]);
+};
+
+export default BoardService;

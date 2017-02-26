@@ -1,7 +1,6 @@
-'use strict';
+import module from '../app-module.js';
 
-angular.module('portfolioApp')
-    .controller('rootCtrl', ['$rootScope', '$route', function ($rootScope, $route) {
+module.controller('rootCtrl', ['$rootScope', '$route', function ($rootScope, $route) {
 
         if ($route.current){
             $rootScope.activeTab = $route.current.activeTab;

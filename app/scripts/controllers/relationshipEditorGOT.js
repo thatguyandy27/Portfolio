@@ -1,14 +1,6 @@
 'use strict';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:MainCtrl
- * @description
- * # MainCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-    .controller('relationshipEditorGOTCtrl', ['$scope', 'sixDegreesOfWesterosService', function ($scope, sixDegreesOfWesterosService) {
+const RelationshipEditorGOTCtrl = function ($scope, sixDegreesOfWesterosService) {
 
     $scope.newHouse = null;
     $scope.newRelationship = null;
@@ -216,4 +208,8 @@ angular.module('portfolioApp')
         }
     }
 
-}]);
+}
+
+RelationshipEditorGOTCtrl.$inject = ['$scope', 'sixDegreesOfWesterosService'];
+
+export default RelationshipEditorGOTCtrl;

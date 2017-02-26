@@ -1,14 +1,5 @@
-'use strict';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:CsssolarsystemCtrl
- * @description
- * # CsssolarsystemCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-  .controller('CanvasChessCtrl', ['$scope', 'boardService', 'playerService', 'gameService', function ($scope, boardService, playerService, gameService) {
+const CanvasChessCtrl = function ($scope, boardService, playerService, gameService) {
 
     var board = boardService.createBoard();
 
@@ -19,12 +10,7 @@ angular.module('portfolioApp')
 
         $scope.game = gameService.newGame(playerService.newPlayer("local", {name: "Player1"}), 
             playerService.newPlayer("local", {name: "Player2"}));
-
-
     };
-
-
-
 
     function drawBoard(){
         board.drawBoard(context, [$scope.lightTileColor,$scope.darkTileColor]);
@@ -83,4 +69,8 @@ angular.module('portfolioApp')
     });
 
     drawBoard();
-  }]);
+};
+
+CanvasChessCtrl.$inject = ['$scope', 'boardService', 'playerService', 'gameService'];
+
+export default CanvasChessCtrl;

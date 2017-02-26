@@ -6,20 +6,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
-    <link rel='stylesheet' href='styles/csssolarsystem.css' />
-    <link rel='stylesheet' href='styles/uranus.css' />
-    <link rel='stylesheet' href='styles/relationshipMapGOT.css' />
-    <link rel='stylesheet' href='styles/relationshipEditorGOT.css' />
-    <link rel='stylesheet' href='styles/about.css' />
-    <link rel='stylesheet' href='styles/threejsPlanet.css' />
-    <link rel='stylesheet' href='styles/transparentImageDemo.css' />
-    <!-- endbuild -->
 
     <link href='http://fonts.googleapis.com/css?family=Orbitron:400,500,900,700' rel='stylesheet' type='text/css'>
   </head>
@@ -33,7 +19,7 @@
       <nav class="header">
         <h2 class='appTitle'>Andyland</h2>
         <ul class="nav">
-          <li ng-class="{active: activeTab == ''}" ><a ng-href="#">Home</a></li>
+          <li ng-class="{active: activeTab == ''}" ><a ng-href="#/">Home</a></li>
           <li ng-class="{active: activeTab == 'css-solar-system'}"><a ng-href="#/css-solar-system">CSS Solar System</a></li>
           <li ng-class="{active: activeTab == 'three-js-planet'}"><a ng-href="#/three-js-planet">3D Planets</a></li>
           <li ng-class="{active: activeTab == 'bubble-popper'}"><a ng-href="#/bubble-popper">Bubble Popper</a></li>
@@ -58,55 +44,5 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-
-    <!--[if lt IE 9]>
-    <script src="bower_components/es5-shim/es5-shim.js"></script>
-    <script src="bower_components/json3/lib/json3.min.js"></script>
-    <![endif]-->
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/json3/lib/json3.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/three.js/three.min.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/root.js"></script>
-
-        <script src='scripts/libraries/OrbitControls.js'></script>
-
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src='scripts/controllers/bubblePopper.js'></script>
-        <script src="scripts/controllers/csssolarsystem.js"></script>
-        <script src='scripts/controllers/threejsDemo.js'></script>
-        <script src='scripts/controllers/canvasChess.js'></script>
-        <script src='scripts/controllers/threejsBubbles.js'></script>
-        <script src='scripts/controllers/threejsSolarSystem.js'></script>
-        <script src='scripts/controllers/threejsPlanet.js'></script>
-        <script src='scripts/controllers/relationshipMapGOT.js'></script>
-        <script src='scripts/controllers/relationshipEditorGOT.js'></script>
-        <script src='scripts/controllers/transparentImageDemo.js'></script>
-
-        <script src='scripts/services/canvasChess/board.js'></script>
-        <script src='scripts/services/canvasChess/piece.js'></script>
-        <script src='scripts/services/canvasChess/player.js'></script>
-        <script src='scripts/services/canvasChess/game.js'></script>
-
-        <script src='scripts/services/bubbleService.js'></script>
-        <script src='scripts/services/planetService.js'></script>
-        <script src='scripts/services/sixDegreesOfWesterosService.js'></script>
-        <!-- endbuild -->
 </body>
 </html>

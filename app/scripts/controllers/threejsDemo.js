@@ -1,14 +1,6 @@
-'use strict';
+import THREE from 'three/three.js';
 
-/**
- * @ngdoc function
- * @name portfolioApp.controller:CsssolarsystemCtrl
- * @description
- * # CsssolarsystemCtrl
- * Controller of the portfolioApp
- */
-angular.module('portfolioApp')
-  .controller('threeJsDemoCtrl', function ($scope) {
+const ThreeJSDemoCtrl = function ($scope) {
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
@@ -31,4 +23,8 @@ angular.module('portfolioApp')
     }
     render();
 
-  });
+};
+
+ThreeJSDemoCtrl.$inject = ['$scope'];
+
+export default ThreeJSDemoCtrl;

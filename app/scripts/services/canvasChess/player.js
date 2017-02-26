@@ -1,5 +1,4 @@
-angular.module('portfolioApp').
-    factory('playerService', [function(){
+const PlayerService = function(){
 
 
     function LocalPlayer(options){
@@ -28,4 +27,6 @@ angular.module('portfolioApp').
         createPlayer: createPlayer,
         PLAYER_TYPES: ["local", "socket", "wrtc", "ai"]
     };
-}]);
+};
+
+export default PlayerService;

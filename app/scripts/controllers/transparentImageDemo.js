@@ -1,8 +1,4 @@
-'use strict';
-
-
-angular.module('portfolioApp').
-    controller('transparentImageDemoCtrl', ['$scope', '$timeout', function($scope, $timeout){
+const TransparentImageDemoCtrl = function($scope, $timeout){
 
     $scope.mergeProperties ={
         x:0,
@@ -91,4 +87,8 @@ angular.module('portfolioApp').
 
     loadImages(sourceImageUrl, alphaImageUrl);
 
-}])
+};
+
+TransparentImageDemoCtrl.$inject = ['$scope', '$timeout'];
+
+export default TransparentImageDemoCtrl;
