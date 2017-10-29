@@ -12,4 +12,6 @@ import './scripts/services/service-module.js';
 import './scripts/controllers/controller-module.js';
 import './scripts/root.js';
 import './scripts/libraries/OrbitControls.js';
+import './components/components.js';
 
+console.log('updated yo');

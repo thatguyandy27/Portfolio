@@ -51,8 +51,7 @@ module.config([ '$routeProvider', '$locationProvider', function ($routeProvider,
         controller: 'threeJsBubbleCtrl'
       })
       .when('/three-js-solarsystem', {
-        templateUrl: 'views/threeJsSolarSystem.html.html',
-        controller: 'threeJsSolarSystemCtrl'
+        template: '<threejs-planet></threejs-planet>'
       })
       .when('/six-degrees-of-westeros', {
         templateUrl: 'views/relationshipMapGOT.html',
@@ -63,8 +62,7 @@ module.config([ '$routeProvider', '$locationProvider', function ($routeProvider,
         controller: 'relationshipEditorGOTCtrl'
       })
       .when('/three-js-planet', {
-        templateUrl: 'views/threejsPlanet.html',
-        controller: 'threejsPlanetCtrl'
+        template: '<threejs-planet></threejs-planet>'
       })
       .when('/image-merge-demo', {
         templateUrl: 'views/transparentImageDemo.html',
@@ -80,3 +78,4 @@ module.config([ '$routeProvider', '$locationProvider', function ($routeProvider,
      $rootScope.activeTab = (newVal)? newVal.substr(1) : '';
    });
 }]);
+

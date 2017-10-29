@@ -87,7 +87,10 @@ module.exports = function makeWebpackConfig () {
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
       loader: 'babel',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      query: {
+        presets: ['es2015', 'react']
+      }
     }, {
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader
